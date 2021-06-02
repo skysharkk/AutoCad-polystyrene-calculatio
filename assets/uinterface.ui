@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>403</width>
+    <height>889</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_3">
+   <item>
+    <widget class="QGroupBox" name="init_data">
+     <property name="title">
+      <string>Исходные данные</string>
+     </property>
+     <property name="checkable">
+      <bool>false</bool>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_6">
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Масштаб</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="init_data_scale"/>
+      </item>
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Толщина ППТ</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="init_data_thickness"/>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="init_data_type">
+        <property name="title">
+         <string>Тип</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QRadioButton" name="init_data_type_1">
+           <property name="text">
+            <string>ППТ-15-А-Р</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="init_data_type_2">
+           <property name="text">
+            <string>Эффективный утеплитель λ ≤ 0,034 Вт/(м·°C)</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTreeWidget" name="init_data_table">
+        <column>
+         <property name="text">
+          <string>Толщина</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Тип</string>
+         </property>
+        </column>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QPushButton" name="init_data_add">
+          <property name="text">
+           <string>Добавить</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="init_data_delete">
+          <property name="text">
+           <string>Удалить</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton">
+        <property name="text">
+         <string>Выбрать позиции ППТ</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="title">
+      <string>Результат</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_4">
+      <item>
+       <widget class="QTableWidget" name="tableWidget_2">
+        <property name="sizeAdjustPolicy">
+         <enum>QAbstractScrollArea::AdjustToContents</enum>
+        </property>
+        <attribute name="horizontalHeaderMinimumSectionSize">
+         <number>50</number>
+        </attribute>
+        <attribute name="verticalHeaderVisible">
+         <bool>false</bool>
+        </attribute>
+        <column>
+         <property name="text">
+          <string>Поз.</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Обозначение</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Наименование</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Кол., шт.</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Объем, м3</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Примечания</string>
+         </property>
+        </column>
+       </widget>
+      </item>
+      <item>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="1">
+         <widget class="QPushButton" name="pushButton_4">
+          <property name="text">
+           <string>Экспорт таблицы в AutoCAD</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QPushButton" name="pushButton_3">
+          <property name="text">
+           <string>Удалить позицию</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QPushButton" name="pushButton_5">
+          <property name="text">
+           <string>Экспорт таблицы в Excel</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QPushButton" name="pushButton_6">
+          <property name="text">
+           <string>Отрисовать пакеты в AutoCAD</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_4">
+     <property name="title">
+      <string>Отходы</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_5">
+      <item>
+       <widget class="QGroupBox" name="groupBox_5">
+        <property name="title">
+         <string>Общий объем ППТ</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_7">
+         <item>
+          <widget class="QLabel" name="label_3">
+           <property name="text">
+            <string>ППТ-15</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEdit_3"/>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_4">
+           <property name="text">
+            <string>Эффективный</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEdit_4"/>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QPushButton" name="pushButton_7">
+          <property name="text">
+           <string>Рассчиать и вывести на лист</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_8">
+          <property name="text">
+           <string>Отрисовать раскрой</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
