@@ -14,6 +14,7 @@ pywin32 = "^301"
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.4"
 mypy = "^0.812"
+autopep8 = "^1.5.7"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
