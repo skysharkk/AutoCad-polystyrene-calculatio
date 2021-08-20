@@ -71,17 +71,22 @@ class AcadTable:
             for row_index in range(len(self.row_height)):
                 self.__table.VertCellMargin = 0
                 self.__table.HorzCellMargin = 0
-                self.__table.SetTextHeight2(row_index, col_index, 1, text_height)
+                self.__table.SetTextHeight2(
+                    row_index, col_index, 1, text_height)
                 if row_index == 0:
                     self.set_vert_and_horz_line_weight(
                         [row_index, col_index], line_weight)
-                    self.__table.SetCellAlignment(row_index, col_index, self.__constants.acMiddleCenter)
+                    self.__table.SetCellAlignment(
+                        row_index, col_index, self.__constants.acMiddleCenter)
                 else:
                     self.set_vertical_line_weight(
                         [row_index, col_index], line_weight)
                     if col_index == 2:
-                        self.__table.SetCellAlignment(row_index, col_index, self.__constants.acMiddleLeft)
+                        self.__table.SetCellAlignment(
+                            row_index, col_index, self.__constants.acMiddleLeft)
                     else:
-                        self.__table.SetCellAlignment(row_index, col_index, self.__constants.acMiddleCenter)
+                        self.__table.SetCellAlignment(
+                            row_index, col_index, self.__constants.acMiddleCenter)
                 if self.data[row_index][col_index] is not None:
-                    self.__table.SetText(row_index, col_index, self.data[row_index][col_index])
+                    self.__table.SetText(
+                        row_index, col_index, self.data[row_index][col_index])
