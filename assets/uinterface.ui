@@ -51,8 +51,14 @@
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
           <widget class="QRadioButton" name="init_data_type_1">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
            <property name="text">
             <string>ППТ-15-А-Р</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
            </property>
           </widget>
          </item>

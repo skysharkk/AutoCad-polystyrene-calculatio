@@ -1,5 +1,6 @@
 from PyQt6 import QtCore, QtWidgets, QtGui
 import os
+import sys
 
 
 class Ui_Form(object):
@@ -30,6 +31,7 @@ class Ui_Form(object):
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.init_data_type)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.init_data_type_1 = QtWidgets.QRadioButton(self.init_data_type)
+        self.init_data_type_1.setChecked(True)
         self.init_data_type_1.setObjectName("init_data_type_1")
         self.verticalLayout_2.addWidget(self.init_data_type_1)
         self.init_data_type_2 = QtWidgets.QRadioButton(self.init_data_type)
@@ -48,9 +50,9 @@ class Ui_Form(object):
         self.init_data_delete.setObjectName("init_data_delete")
         self.horizontalLayout_2.addWidget(self.init_data_delete)
         self.verticalLayout_6.addLayout(self.horizontalLayout_2)
-        self.pushButton = QtWidgets.QPushButton(self.init_data)
-        self.pushButton.setObjectName("pushButton")
-        self.verticalLayout_6.addWidget(self.pushButton)
+        self.choose_autocad_el = QtWidgets.QPushButton(self.init_data)
+        self.choose_autocad_el.setObjectName("choose_autocad_el")
+        self.verticalLayout_6.addWidget(self.choose_autocad_el)
         self.verticalLayout_3.addWidget(self.init_data)
         self.groupBox_3 = QtWidgets.QGroupBox(Form)
         self.groupBox_3.setObjectName("groupBox_3")
@@ -129,10 +131,10 @@ class Ui_Form(object):
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form: QtWidgets.QWidget):
+        app_icon = QtGui.QIcon(os.path.join(sys.path[1], "assets", "logo.png"))
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Раскладка утеплителя"))
-        Form.setWindowIcon(
-            QtGui.QIcon(os.path.join(os.getcwd(), "assets", "logo.png")))
+        Form.setWindowIcon(app_icon)
         self.init_data.setTitle(_translate("Form", "Исходные данные"))
         self.label_2.setText(_translate("Form", "Масштаб"))
         self.label.setText(_translate("Form", "Толщина ППТ"))
@@ -144,7 +146,7 @@ class Ui_Form(object):
         self.init_data_table.headerItem().setText(1, _translate("Form", "Тип"))
         self.init_data_add.setText(_translate("Form", "Добавить"))
         self.init_data_delete.setText(_translate("Form", "Удалить"))
-        self.pushButton.setText(_translate("Form", "Выбрать позиции ППТ"))
+        self.choose_autocad_el.setText(_translate("Form", "Выбрать позиции ППТ"))
         self.groupBox_3.setTitle(_translate("Form", "Результат"))
         item = self.tableWidget_2.horizontalHeaderItem(0)
         item.setText(_translate("Form", "Поз."))
