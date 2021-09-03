@@ -1,7 +1,7 @@
 import math
 import ctypes
 from array import array
-from typing import Union, NamedTuple, List, Tuple, Any, NoReturn
+from typing import Union, NamedTuple, List, Tuple, Any, NoReturn, TypeVar
 
 
 def round_half_up(number: float, decimals: int = 0, int_result: bool = True) -> Union[int, float]:
@@ -37,7 +37,7 @@ def get_corner_coordinates(coordinates_tuple: Tuple[float, ...]) -> Points:
     return Points(min_x, max_x, min_y, max_y)
 
 
-def get_rectangle_sizes(coordinates_tuple: Tuple[float, ...], scale: float) -> Tuple[float, float]:
+def get_rectangle_sizes(coordinates_tuple: Tuple[float], scale: float) -> Tuple[float, float]:
     coordinates: Points = get_corner_coordinates(coordinates_tuple)
     width: float = abs(round_half_up(
         (coordinates.max_x - coordinates.min_x) * scale))
@@ -46,8 +46,11 @@ def get_rectangle_sizes(coordinates_tuple: Tuple[float, ...], scale: float) -> T
     return width, height
 
 
-def compare_list_or_tuple(first_list: Union[List[Any], Tuple[Any]],
-                          second_list: Union[List[Any], Tuple[Any]]) -> bool:
+T = TypeVar("T")
+
+
+def compare_list_or_tuple(first_list: T,
+                          second_list: T) -> bool:
     return set(first_list) == set(second_list)
 
 
@@ -67,7 +70,7 @@ def create_array_of_double(converted_list: List[Any]) -> array:
     return array("d", converted_list)
 
 
-def two_dimension_list_to_list(converted_list: List[Any]) -> List[Any]:
+def two_dimension_list_to_list(converted_list: List[List[T]]) -> List[T]:
     formatted_list = []
     for item in converted_list:
         formatted_list.extend(item)
