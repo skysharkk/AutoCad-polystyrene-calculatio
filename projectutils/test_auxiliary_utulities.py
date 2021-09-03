@@ -83,3 +83,4 @@ def test_create_array_of_double():
 
 def test_two_dimension_list_to_list():
     assert two_dimension_list_to_list([[1, 2], [3, 4]]) == [1, 2, 3, 4]
+    assert two_dimension_list_to_list([[1, 2], [3, 4], [5, 6]]) == [1, 2, 3, 4, 5, 6]
