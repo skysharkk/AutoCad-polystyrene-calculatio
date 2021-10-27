@@ -1,19 +1,19 @@
 [tool.poetry]
 name = "autocad-polystyrene-calculatio"
 version = "0.1.0"
-description = "calculating the volume of polystyrene"
+description = ""
 authors = ["skysharkk <sky.light.blr@gmail.com>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.9"
-PyQt6 = "^6.1.0"
+python = "^3.8"
+PyQt6 = "^6.2.0"
 pyautocad = "^0.2.0"
 pywin32 = "^301"
 
 [tool.poetry.dev-dependencies]
-pytest = "^6.2.4"
-mypy = "^0.812"
+pytest = "^6.2.5"
+mypy = "^0.910"
 autopep8 = "^1.5.7"
 
 [build-system]
