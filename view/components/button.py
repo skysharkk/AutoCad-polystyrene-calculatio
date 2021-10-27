@@ -1,9 +1,20 @@
+from typing import Callable
 from PyQt6.QtWidgets import QPushButton
 
 
 class Button:
-    def __init__(self, btn: QPushButton) -> None:
-        self.btn = btn
+    btn: QPushButton
+    is_enabled: bool
 
-    def connect_action(self, func) -> None:
+    def __init__(self, btn: QPushButton, is_enabled=True) -> None:
+        self.btn = btn
+        self.btn.setEnabled(is_enabled)
+
+    def connect_action(self, func: Callable[..., None]) -> None:
         self.btn.clicked.connect(func)
+
+    def enable_btn(self) -> None:
+        self.btn.setEnabled(True)
+
+    def disable_btn(self) -> None:
+        self.btn.setEnabled(False)
