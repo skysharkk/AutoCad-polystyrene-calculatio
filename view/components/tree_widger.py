@@ -1,12 +1,12 @@
-from typing import Tuple
-
+from typing import Tuple, Callable, List
 from PyQt6.QtWidgets import QTreeWidget, QTreeWidgetItem
 
 
 class TreeWidget:
+
     def __init__(self, tree_widget: QTreeWidget):
         self.tree_widget = tree_widget
-        self.el_list = []
+        self.el_list: List[Tuple[int, str]] = []
 
     def is_exist(self, characteristic: Tuple[int, str]) -> bool:
         for el in self.el_list:
@@ -14,12 +14,12 @@ class TreeWidget:
                 return True
         return False
 
-    def add_element(self, thickness: int, poly_type: str) -> None:
-        char = (thickness, poly_type)
+    def add_element(self, width: int, poly_type: str) -> None:
+        char = (width, poly_type)
         if not self.is_exist(char):
             self.el_list.append(char)
             widget_item = QTreeWidgetItem(self.tree_widget)
-            widget_item.setText(0, str(thickness))
+            widget_item.setText(0, str(width))
             widget_item.setText(1, poly_type)
 
     def get_selected_item(self) -> Tuple[int, Tuple[int, str]]:
@@ -36,3 +36,5 @@ class TreeWidget:
             return True
         return False
 
+    def connect_clicked_event(self, func: Callable[..., None]) -> None:
+        self.tree_widget.itemClicked.connect(func)
