@@ -1,7 +1,7 @@
 import math
 import ctypes
 from array import array
-from typing import Union, NamedTuple, List, Tuple, Any, NoReturn, TypeVar
+from typing import Union, NamedTuple, List, Tuple, Any, TypeVar, Iterable
 
 
 def round_half_up(number: float, decimals: int = 0, int_result: bool = True) -> Union[int, float]:
@@ -49,8 +49,8 @@ def get_rectangle_sizes(coordinates_tuple: Tuple[float], scale: float) -> Tuple[
 T = TypeVar("T")
 
 
-def compare_list_or_tuple(first_list: T,
-                          second_list: T) -> bool:
+def compare_list_or_tuple(first_list: Iterable,
+                          second_list: Iterable) -> bool:
     return set(first_list) == set(second_list)
 
 
@@ -61,7 +61,7 @@ def is_elem_exist_in_collection(elem: Any, collection: Union[List[Any], Tuple[An
     return False
 
 
-def show_error_window(error_message: str, window_name: str = u"Ошибка") -> NoReturn:
+def show_error_window(error_message: str, window_name: str = u"Ошибка"):
     ctypes.windll.user32.MessageBoxW(
         0, error_message, window_name, 0)
 
