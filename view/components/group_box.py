@@ -8,6 +8,7 @@ class GroupBox:
     def get_checked_radio_button(self) -> str:
         for el in self.group_box.children():
             if el.inherits("QRadioButton"):
-                radio_button: QRadioButton = el
-                if radio_button.isChecked():
-                    return radio_button.text()
+                if el.isChecked():
+                    return el.text()
+        return "empty"
+
