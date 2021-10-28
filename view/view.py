@@ -1,8 +1,8 @@
 from PyQt5.QtWidgets import QApplication, QWidget
-from uinterface import Ui_Form
+from view.uinterface import Ui_Form
 from typing import Callable
 import sys
-from components import Input, GroupBox, Button, TreeWidget, TableWidget
+from view.components import Input, GroupBox, Button, TreeWidget, TableWidget
 
 
 def view() -> None:
@@ -59,12 +59,11 @@ def view() -> None:
         if len(types_table.el_list) == 0:
             delete_type_btn.disable_btn()
 
-    scale.connect_text_changed_event(enabled_and_disabled_btn(scale, choose_pos_btn))
-    width.connect_text_changed_event(enabled_and_disabled_btn(width, add_type_btn))
+    scale.connect_text_changed_event(
+        enabled_and_disabled_btn(scale, choose_pos_btn))
+    width.connect_text_changed_event(
+        enabled_and_disabled_btn(width, add_type_btn))
     types_table.connect_clicked_event(enabled_delete_type_btn)
     add_type_btn.connect_action(add_char)
     delete_type_btn.connect_action(delete_type_btn_action)
     sys.exit(app.exec())
-
-
-view()
