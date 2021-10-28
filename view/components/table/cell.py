@@ -1,6 +1,6 @@
 from typing import Union, Tuple
 
-from PyQt6 import QtWidgets, QtCore
+from PyQt5 import QtWidgets, QtCore
 
 from collections import namedtuple
 

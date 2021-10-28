@@ -1,4 +1,8 @@
-from PyQt6 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtGui, QtWidgets
+import os
+
+
+os.environ["QT_ENABLE_HIGHDPI_SCALING"] = "1"
 
 
 class Ui_Form(object):

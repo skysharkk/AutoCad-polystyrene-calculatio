@@ -7,9 +7,9 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-PyQt6 = "^6.2.0"
 pyautocad = "^0.2.0"
 pywin32 = "^301"
+PyQt5 = "^5.15.5"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"

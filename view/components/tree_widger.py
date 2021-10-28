@@ -1,5 +1,5 @@
 from typing import Tuple, Callable, List
-from PyQt6.QtWidgets import QTreeWidget, QTreeWidgetItem
+from PyQt5.QtWidgets import QTreeWidget, QTreeWidgetItem
 
 
 class TreeWidget:

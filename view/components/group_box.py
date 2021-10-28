@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QGroupBox, QRadioButton
+from PyQt5.QtWidgets import QGroupBox, QRadioButton
 
 
 class GroupBox:

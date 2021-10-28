@@ -1,6 +1,6 @@
 from typing import List, Any, Union
 
-from PyQt6 import QtWidgets
+from PyQt5 import QtWidgets
 
 from .cell import Cell
 

@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QTableWidget
+from PyQt5.QtWidgets import QTableWidget
 from typing import List
 
 from .row import Row

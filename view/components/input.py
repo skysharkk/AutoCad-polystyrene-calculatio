@@ -1,6 +1,6 @@
-from PyQt6.QtWidgets import QLineEdit
-from PyQt6.QtCore import QRegularExpression
-from PyQt6.QtGui import QRegularExpressionValidator
+from PyQt5.QtWidgets import QLineEdit
+from PyQt5.QtCore import QRegularExpression
+from PyQt5.QtGui import QRegularExpressionValidator
 from projectutils import show_error_window
 from typing import Callable, Union
 

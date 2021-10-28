@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QApplication, QWidget
+from PyQt5.QtWidgets import QApplication, QWidget
 from uinterface import Ui_Form
 from typing import Callable
 import sys
@@ -8,6 +8,9 @@ from components import Input, GroupBox, Button, TreeWidget, TableWidget
 def view() -> None:
     app = QApplication(sys.argv)
     form = QWidget()
+    font = form.font()
+    font.setPointSize(8)
+    form.setFont(font)
     window = Ui_Form()
     window.setupUi(form)
     form.show()
@@ -61,7 +64,6 @@ def view() -> None:
     types_table.connect_clicked_event(enabled_delete_type_btn)
     add_type_btn.connect_action(add_char)
     delete_type_btn.connect_action(delete_type_btn_action)
-
     sys.exit(app.exec())
 
 
