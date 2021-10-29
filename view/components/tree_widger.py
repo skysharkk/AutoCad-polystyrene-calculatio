@@ -3,10 +3,11 @@ from PyQt5.QtWidgets import QTreeWidget, QTreeWidgetItem
 
 
 class TreeWidget:
+    el_list: List[Tuple[int, str]]
 
     def __init__(self, tree_widget: QTreeWidget):
         self.tree_widget = tree_widget
-        self.el_list: List[Tuple[int, str]] = []
+        self.el_list = []
 
     def is_exist(self, characteristic: Tuple[int, str]) -> bool:
         for el in self.el_list:
@@ -15,7 +16,7 @@ class TreeWidget:
         return False
 
     def add_element(self, width: int, poly_type: str) -> None:
-        char = (width, poly_type)
+        char = (width, poly_type.encode("utf-8"))
         if not self.is_exist(char):
             self.el_list.append(char)
             widget_item = QTreeWidgetItem(self.tree_widget)
@@ -25,7 +26,6 @@ class TreeWidget:
     def get_selected_item(self) -> Tuple[int, Tuple[int, str]]:
         item = self.tree_widget.currentItem()
         index = self.tree_widget.indexOfTopLevelItem(item)
-        print(index, self.el_list[index])
         return index, self.el_list[index]
 
     def delete_selected_widget_item(self) -> bool:
@@ -38,3 +38,8 @@ class TreeWidget:
 
     def connect_clicked_event(self, func: Callable[..., None]) -> None:
         self.tree_widget.itemClicked.connect(func)
+
+    def is_epmty(self) -> bool:
+        if len(self.el_list) > 0:
+            return False
+        return True
