@@ -51,8 +51,14 @@ class InitialData:
         else:
             self.add_type_btn.enable_btn()
 
-    def change_choose_pos_btn_state(self):
+    def change_choose_pos_btn_state(self) -> None:
         if self.scale.is_empty() or self.types_table.is_epmty():
             self.choose_pos_btn.disable_btn()
         else:
             self.choose_pos_btn.enable_btn()
+
+    def enable(self) -> None:
+        self.form.init_data.setEnabled(True)
+
+    def disable(self) -> None:
+        self.form.init_data.setDisabled(True)
