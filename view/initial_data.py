@@ -1,24 +1,14 @@
-from abc import ABC, abstractmethod
 from collections import namedtuple
 from typing import List
-from model import Item
 from view.components import Input, GroupBox, Button, TreeWidget
 from view.uinterface import Ui_Form
 from observer import Observer, Subject
-
+from model import Acad
 
 Data = namedtuple("Data", ["scale", "type", "depth", "coordinates"])
 
 
-class CustomSubject(Subject, ABC):
-
-    @property
-    @abstractmethod
-    def selected_items(self) -> List[Item]:
-        pass
-
-
-class InitialData(Observer):
+class InitialData(Observer, Subject):
     scale: Input
     depth: Input
     poly_type_group: GroupBox
@@ -47,6 +37,7 @@ class InitialData(Observer):
         self.add_type_btn.connect_action(self.add_char)
         self.types_table.connect_clicked_event(self.delete_type_btn.enable_btn)
         self.delete_type_btn.connect_action(self.remove_table_item)
+        self._observers: List[Observer] = []
 
     def add_char(self) -> None:
         poly_type = self.poly_type_group.get_checked_radio_button()
@@ -79,10 +70,21 @@ class InitialData(Observer):
     def disable(self) -> None:
         self.form.init_data.setDisabled(True)
 
-    def update(self, subject: CustomSubject) -> None:
+    def update(self, subject: Acad) -> None:
         self.data = Data(
             self.scale.get_value(),
             self.poly_type_group.get_checked_radio_button(),
             self.depth.get_value(),
             subject.selected_items
         )
+        self.notify()
+
+    def attach(self, observer: Observer) -> None:
+        self._observers.append(observer)
+
+    def detach(self, observer: Observer) -> None:
+        self._observers.remove(observer)
+
+    def notify(self) -> None:
+        for observer in self._observers:
+            observer.update(self)

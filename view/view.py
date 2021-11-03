@@ -8,3 +8,5 @@ class View:
         self.window = Window()
         self.initial_data = InitialData(self.window.form)
         self.results = Results(self.window.form)
+        self.initial_data.attach(self.results.acad_table)
+
