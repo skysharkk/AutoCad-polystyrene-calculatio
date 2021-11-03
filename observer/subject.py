@@ -1,5 +1,10 @@
+from __future__ import annotations
 from abc import ABC, abstractmethod
-from .observer import Observer
+from typing import TYPE_CHECKING
+
+
+if TYPE_CHECKING:
+    from observer import Observer
 
 
 class Subject(ABC):
@@ -14,4 +19,3 @@ class Subject(ABC):
     @abstractmethod
     def notify(self) -> None:
         pass
-
