@@ -43,3 +43,7 @@ class Acad(Subject):
             selected.SelectOnScreen()
             self._selected_items = Items(selected).get_items
             self.notify()
+
+    @property
+    def selected_items(self):
+        return self._selected_items
