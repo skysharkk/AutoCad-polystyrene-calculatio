@@ -56,7 +56,7 @@ class InitialData(Observer):
 
     def remove_table_item(self) -> None:
         self.types_table.delete_selected_widget_item()
-        if self.types_table.is_epmty():
+        if self.types_table.is_empty():
             self.delete_type_btn.disable_btn()
             self.choose_pos_btn.disable_btn()
 
@@ -67,7 +67,7 @@ class InitialData(Observer):
             self.add_type_btn.enable_btn()
 
     def change_choose_pos_btn_state(self) -> None:
-        if self.scale.is_empty() or self.types_table.is_epmty():
+        if self.scale.is_empty() or self.types_table.is_empty():
             self.choose_pos_btn.disable_btn()
         else:
             self.choose_pos_btn.enable_btn()
@@ -85,3 +85,4 @@ class InitialData(Observer):
             self.depth.get_value(),
             subject.selected_items
         )
+        print(self.data)
