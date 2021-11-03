@@ -39,7 +39,7 @@ class TreeWidget:
     def connect_clicked_event(self, func: Callable[..., None]) -> None:
         self.tree_widget.itemClicked.connect(func)
 
-    def is_epmty(self) -> bool:
+    def is_empty(self) -> bool:
         if len(self.el_list) > 0:
             return False
         return True
