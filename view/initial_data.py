@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from collections import namedtuple
-from typing import Callable, Tuple, Any
+from typing import List
+from model import Item
 from view.components import Input, GroupBox, Button, TreeWidget
 from view.uinterface import Ui_Form
 from observer import Observer, Subject
@@ -13,7 +14,7 @@ class CustomSubject(Subject, ABC):
 
     @property
     @abstractmethod
-    def selected_items(self) -> Tuple[Any]:
+    def selected_items(self) -> List[Item]:
         pass
 
 
@@ -85,4 +86,3 @@ class InitialData(Observer):
             self.depth.get_value(),
             subject.selected_items
         )
-        print(self.data)

@@ -3,13 +3,13 @@ from PyQt5.QtWidgets import QTreeWidget, QTreeWidgetItem
 
 
 class TreeWidget:
-    el_list: List[Tuple[int, str]]
+    el_list: List[Tuple[int, bytes]]
 
     def __init__(self, tree_widget: QTreeWidget):
         self.tree_widget = tree_widget
         self.el_list = []
 
-    def is_exist(self, characteristic: Tuple[int, str]) -> bool:
+    def is_exist(self, characteristic: Tuple[int, bytes]) -> bool:
         for el in self.el_list:
             if el == characteristic:
                 return True
@@ -23,7 +23,7 @@ class TreeWidget:
             widget_item.setText(0, str(width))
             widget_item.setText(1, poly_type)
 
-    def get_selected_item(self) -> Tuple[int, Tuple[int, str]]:
+    def get_selected_item(self) -> Tuple[int, Tuple[int, bytes]]:
         item = self.tree_widget.currentItem()
         index = self.tree_widget.indexOfTopLevelItem(item)
         return index, self.el_list[index]
