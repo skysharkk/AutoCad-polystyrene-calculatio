@@ -1,16 +1,9 @@
-from __future__ import annotations
 from PyQt5.QtWidgets import QTableWidget
 from typing import List
 from .row import Row
-from observer import Observer
-from typing import TYPE_CHECKING
 
 
-if TYPE_CHECKING:
-    from view.initial_data import InitialData
-
-
-class TableWidget(Observer):
+class TableWidget:
     table_data: List[Row]
 
     def __init__(self, table_widget: QTableWidget):
@@ -38,6 +31,3 @@ class TableWidget(Observer):
     def remove_row(self) -> None:
         self.table_widget.removeRow(self.get_current_row())
         self.table_widget.resizeColumnsToContents()
-
-    def update(self, subject: InitialData) -> None:
-        pass
