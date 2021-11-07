@@ -28,6 +28,8 @@ class TableWidget:
     def get_current_row(self):
         return self.table_widget.currentRow()
 
-    def remove_row(self) -> None:
-        self.table_widget.removeRow(self.get_current_row())
+    def remove_row(self) -> int:
+        current_row = self.get_current_row()
+        self.table_widget.removeRow(current_row)
         self.table_widget.resizeColumnsToContents()
+        return current_row
