@@ -35,16 +35,19 @@ class InitialData(Observer, Subject):
         self.scale.connect_text_changed_event(self.change_choose_pos_btn_state)
         self.depth.connect_text_changed_event(self.change_add_type_btn_state)
         self.add_type_btn.connect_action(self.add_char)
-        self.types_table.connect_clicked_event(self.delete_type_btn.enable_btn)
+        self.types_table.connect_clicked_event(self.types_table_event)
         self.delete_type_btn.connect_action(self.remove_table_item)
         self._observers: List[Observer] = []
+
+    def types_table_event(self):
+        self.delete_type_btn.enable_btn()
+        if not self.scale.is_empty():
+            self.choose_pos_btn.enable_btn()
 
     def add_char(self) -> None:
         poly_type = self.poly_type_group.get_checked_radio_button()
         depth_value = self.depth.get_value()
         self.types_table.add_element(int(depth_value), poly_type)
-        if not self.scale.is_empty():
-            self.choose_pos_btn.enable_btn()
 
     def remove_table_item(self) -> None:
         self.types_table.delete_selected_widget_item()
