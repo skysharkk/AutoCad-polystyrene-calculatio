@@ -19,6 +19,7 @@ class TableWidget:
         self.table_widget.resizeColumnsToContents()
 
     def import_data(self, data: List[List[str]]) -> None:
+        self._clear_table()
         for data_index, data_el in enumerate(data):
             self.insert_row(data_el, data_index)
 
@@ -33,3 +34,8 @@ class TableWidget:
         self.table_widget.removeRow(current_row)
         self.table_widget.resizeColumnsToContents()
         return current_row
+
+    def _clear_table(self) -> None:
+        while self.table_widget.rowCount() > 0:
+            self.table_widget.removeRow(0)
+        self.table_data.clear()
