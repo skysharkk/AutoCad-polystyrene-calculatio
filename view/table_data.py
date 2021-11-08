@@ -74,6 +74,13 @@ class TableData:
             min(y_coordinates)
         )
 
+    def _coordinates_is_exist(self, item_coordinates: Tuple[float, ...]) -> bool:
+        for el in self._data:
+            for coord in el.coordinates:
+                if item_coordinates == coord:
+                    return True
+        return False
+
     def _increase_amount_if_exist(self, item: DataItem) -> bool:
         pos_index = 0
         amount_index = 5
@@ -109,8 +116,9 @@ class TableData:
                     "",
                     [item.coordinates]
                 )
-            if len(self._data) == 0 or not self._increase_amount_if_exist(data_item):
-                self._data.append(data_item)
+            if not self._coordinates_is_exist(data_item.coordinates[0]):
+                if len(self._data) == 0 or not self._increase_amount_if_exist(data_item):
+                    self._data.append(data_item)
 
     def data_to_list(self) -> List[List[str]]:
         res = []
