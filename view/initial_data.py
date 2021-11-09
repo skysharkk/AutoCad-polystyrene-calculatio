@@ -5,7 +5,7 @@ from view.uinterface import Ui_Form
 from observer import Observer, Subject
 from model import Acad
 
-Data = namedtuple("Data", ["scale", "type", "depth", "coordinates"])
+Data = namedtuple("Data", ["scale", "poly_type", "depth", "coordinates"])
 
 
 class InitialData(Observer, Subject):

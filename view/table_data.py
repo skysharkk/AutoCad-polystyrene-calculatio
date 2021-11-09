@@ -7,14 +7,15 @@ from dataclasses import dataclass
 if TYPE_CHECKING:
     from .initial_data import Data
 
-RecCoordinates = namedtuple("RecCoordinates", ["max_x", "min_x", "max_y", "min_y"])
+RecCoordinates = namedtuple(
+    "RecCoordinates", ["max_x", "min_x", "max_y", "min_y"])
 Sizes = namedtuple("Sizes", ["width", "height"])
 
 
 @dataclass
 class DataItem:
     pos: str
-    type: str
+    poly_type: bytes
     width: str
     height: str
     depth: str
@@ -29,7 +30,7 @@ class DataItem:
     def data_to_list(self) -> List[str]:
         return [
             self.pos,
-            self.type,
+            self.poly_type,
             self.width,
             self.height,
             self.depth,
@@ -106,23 +107,24 @@ class TableData:
                 TableData._transform_coordinates(item.coordinates)
             )
             data_item = DataItem(
-                    str(len(self._data) + 1),
-                    acad_data.type,
-                    str(sizes.width),
-                    str(sizes.height),
-                    str(int(acad_data.depth)),
-                    str(1),
-                    str(TableData._calc_volume(sizes.width, sizes.height, acad_data.depth)),
-                    "",
-                    [item.coordinates]
-                )
+                str(len(self._data) + 1),
+                acad_data.poly_type.encode("utf-8"),
+                str(sizes.width),
+                str(sizes.height),
+                str(int(acad_data.depth)),
+                str(1),
+                str(TableData._calc_volume(
+                    sizes.width, sizes.height, acad_data.depth)),
+                "",
+                [item.coordinates]
+            )
             if not self._coordinates_is_exist(data_item.coordinates[0]):
                 if len(self._data) == 0 or not self._increase_amount_if_exist(data_item):
                     self._data.append(data_item)
 
     def data_to_list(self) -> List[List[str]]:
         res = []
-        for index, item in enumerate(self._data):
+        for item in self._data:
             res.append(item.data_to_list())
         return res
 

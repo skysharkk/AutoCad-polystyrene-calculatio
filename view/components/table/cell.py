@@ -21,8 +21,8 @@ class Cell:
     def create_cell_item(self) -> None:
         self.item = QtWidgets.QTableWidgetItem(str(self.data))
 
-    def set_data_to_cell(self, data: str) -> None:
-        self.data = data
+    def set_data_to_cell(self, data: Union[str, bytes]) -> None:
+        self.data = data.decode() if type(data) == bytes else data
         self.create_cell_item()
         self.table.setItem(self.position.row, self.position.column, self.item)
         self.item.setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
