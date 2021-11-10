@@ -1,5 +1,4 @@
 from pyautocad import Autocad
-from view.table_data import DataItem
 from .text_item import TextItem
 from typing import List
 from view.table_data import DataItem
@@ -18,3 +17,9 @@ class Text:
                 text_item = TextItem(
                     self.acad, data_item.pos, text_height, text_width)
                 text_item.inscribe_text(coordinate)
+                self.text_items.append(text_item)
+
+    def clear(self) -> None:
+        for item in self.text_items:
+            item.acad_text.Delete()
+        self.text_items = []

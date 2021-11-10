@@ -3,21 +3,22 @@ import win32com.client
 from comtypes.automation import VARIANT
 from ctypes import byref
 from projectutils import show_error_window
+from view.results import Results
 from .items import Items
 from observer import Subject, Observer
-from typing import List
+from typing import List, Union
 from .text import Text
 from view.table_data import DataItem
 
 
-class Acad(Subject):
+class Acad(Subject, Observer):
     def __init__(self) -> None:
         self.acad = Autocad(create_if_not_exists=True)
         self.model = self.acad.model
         self.doc = self.acad.doc
         self._shell = win32com.client.Dispatch("WScript.Shell")
         self._selected_items = None
-        self.acad_text = None
+        self.acad_text: Union[Text, None] = None
         self._observers: List[Observer] = []
 
     def attach(self, observer: Observer) -> None:
@@ -54,3 +55,8 @@ class Acad(Subject):
     @property
     def selected_items(self):
         return self._selected_items
+
+    def update(self, subject: Results) -> None:
+        if self.acad_text:
+            self.acad_text.clear()
+        self.inscribe_text(subject.table_data.data, subject.scale)

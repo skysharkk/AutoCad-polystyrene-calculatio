@@ -15,6 +15,7 @@ class TextItem:
         self.height = height
         self.acad_text = None
         self._constants = Constants(acad.app)
+        self.width = width
 
     @staticmethod
     def get_bounding_box(entity) -> List[array]:
