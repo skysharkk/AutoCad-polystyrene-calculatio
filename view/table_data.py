@@ -3,12 +3,12 @@ from collections import namedtuple
 from typing import List, TYPE_CHECKING, Tuple
 from projectutils import round_half_up
 from dataclasses import dataclass
+from projectutils import get_corner_coordinates
+from projectutils import Points
 
 if TYPE_CHECKING:
     from .initial_data import Data
 
-RecCoordinates = namedtuple(
-    "RecCoordinates", ["max_x", "min_x", "max_y", "min_y"])
 Sizes = namedtuple("Sizes", ["width", "height"])
 
 
@@ -49,7 +49,7 @@ class TableData:
         return self._data
 
     @staticmethod
-    def _calc_sizes(scale: float, coordinates: RecCoordinates) -> Sizes:
+    def _calc_sizes(scale: float, coordinates: Points) -> Sizes:
         return Sizes(
             int(abs(coordinates.max_x - coordinates.min_x) * scale),
             int(abs(coordinates.max_y - coordinates.min_y) * scale)
@@ -58,22 +58,6 @@ class TableData:
     @staticmethod
     def _calc_volume(width: int, height: int, depth: int) -> float:
         return round_half_up((width / 1000) * (height / 1000) * (depth / 1000), 2, False)
-
-    @staticmethod
-    def _transform_coordinates(coordinates: Tuple[float, ...]) -> RecCoordinates:
-        x_coordinates = []
-        y_coordinates = []
-        for index, item in enumerate(coordinates):
-            if index % 2 == 0:
-                x_coordinates.append(item)
-            else:
-                y_coordinates.append(item)
-        return RecCoordinates(
-            max(x_coordinates),
-            min(x_coordinates),
-            max(y_coordinates),
-            min(y_coordinates)
-        )
 
     def _coordinates_is_exist(self, item_coordinates: Tuple[float, ...]) -> bool:
         for el in self._data:
@@ -104,7 +88,7 @@ class TableData:
         for item in acad_data.coordinates:
             sizes = TableData._calc_sizes(
                 acad_data.scale,
-                TableData._transform_coordinates(item.coordinates)
+                get_corner_coordinates(item.coordinates)
             )
             data_item = DataItem(
                 str(len(self._data) + 1),
