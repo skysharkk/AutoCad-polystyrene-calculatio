@@ -48,7 +48,8 @@ class Acad(Subject):
             self.notify()
 
     def inscribe_text(self, data_items: List[DataItem], scale: float) -> None:
-        self.acad_text = Text(self.acad).inscribe_text_items(data_items, scale)
+        self.acad_text = Text(self.acad)
+        self.acad_text.inscribe_text_items(data_items, scale)
 
     @property
     def selected_items(self):
