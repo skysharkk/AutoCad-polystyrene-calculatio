@@ -6,6 +6,8 @@ from projectutils import show_error_window
 from .items import Items
 from observer import Subject, Observer
 from typing import List
+from .text import Text
+from view.table_data import DataItem
 
 
 class Acad(Subject):
@@ -15,6 +17,7 @@ class Acad(Subject):
         self.doc = self.acad.doc
         self._shell = win32com.client.Dispatch("WScript.Shell")
         self._selected_items = None
+        self.acad_text = None
         self._observers: List[Observer] = []
 
     def attach(self, observer: Observer) -> None:
@@ -43,6 +46,9 @@ class Acad(Subject):
             selected.SelectOnScreen()
             self._selected_items = Items(selected).get_items
             self.notify()
+
+    def inscribe_text(self, data_items: List[DataItem], scale: float) -> None:
+        self.acad_text = Text(self.acad).inscribe_text_items(data_items, scale)
 
     @property
     def selected_items(self):
