@@ -1,4 +1,4 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtGui, QtWidgets, QtWinExtras
 import os
 
 
@@ -7,6 +7,8 @@ os.environ["QT_ENABLE_HIGHDPI_SCALING"] = "1"
 
 class Ui_Form(object):
     def setupUi(self, Form):
+        myappid = 'mycompany.myproduct.subproduct.version'
+        QtWinExtras.QtWin.setCurrentProcessExplicitAppUserModelID(myappid)
         Form.setObjectName("Form")
         Form.resize(429, 777)
         Form.setMinimumSize(QtCore.QSize(429, 0))
@@ -161,7 +163,8 @@ class Ui_Form(object):
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Form"))
+        Form.setWindowIcon(QtGui.QIcon("./assets/logo.png"))
+        Form.setWindowTitle(_translate("Form", "Расскладка утеплителя"))
         self.init_data.setTitle(_translate("Form", "Исходные данные"))
         self.label_2.setText(_translate("Form", "Масштаб"))
         self.label.setText(_translate("Form", "Толщина ППТ"))
