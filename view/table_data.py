@@ -39,6 +39,9 @@ class DataItem:
             self.note
         ]
 
+    def get_sizes(self) -> List[str]:
+        return [self.width, self.height, self.depth]
+
 
 class TableData:
     def __init__(self):
@@ -67,18 +70,12 @@ class TableData:
         return False
 
     def _increase_amount_if_exist(self, item: DataItem) -> bool:
-        pos_index = 0
-        amount_index = 5
         for el in self._data:
-            first_item = el.data_to_list()
-            second_item = item.data_to_list()
-            first_item.pop(amount_index)
-            first_item.pop(pos_index)
-            second_item.pop(amount_index)
-            second_item.pop(pos_index)
-            first_item.sort()
-            second_item.sort()
-            if first_item == second_item:
+            first_item_sizes = el.get_sizes()
+            second_item_sizes = item.get_sizes()
+            first_item_sizes.sort()
+            second_item_sizes.sort()
+            if el.poly_type == item.poly_type and first_item_sizes == second_item_sizes:
                 el.increase_amount()
                 el.coordinates.append(item.coordinates[0])
                 return True
