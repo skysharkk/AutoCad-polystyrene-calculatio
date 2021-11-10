@@ -1,3 +1,4 @@
+from projectutils import show_error_window
 from .item import Item
 from typing import List
 
@@ -10,9 +11,12 @@ class Items:
         self._convert_acad_items()
 
     def _convert_acad_items(self) -> None:
-        for index in range(self._acad_items.Count):
-            el = self._acad_items.Item(index)
-            self._items.append(Item(el))
+        try:
+            for index in range(self._acad_items.Count):
+                el = self._acad_items.Item(index)
+                self._items.append(Item(el))
+        except Exception:
+            show_error_window('Ошибка при выделение объектов!')
 
     @property
     def get_items(self):

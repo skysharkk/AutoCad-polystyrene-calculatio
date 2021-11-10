@@ -40,7 +40,7 @@ class Acad(Subject, Observer):
         try:
             if self.doc.SelectionSets.Count > 0:
                 self.doc.SelectionSets.Item("SS1").Delete()
-        except AssertionError:
+        except Exception:
             show_error_window('Ошибка при выделение объектов!')
         finally:
             selected = self.doc.SelectionSets.Add("SS1")
