@@ -1,6 +1,7 @@
 import win32com.client
 import logging
-from comtypes.automation import VARIANT
+
+
 from ctypes import byref
 from array import array
 from collections import namedtuple

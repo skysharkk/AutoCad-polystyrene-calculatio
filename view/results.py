@@ -18,6 +18,7 @@ class Results(Observer, Subject):
         self.del_table_btn.connect_action(self._remove_row)
         self.table_data = TableData()
         self._observers: List[Observer] = []
+        self.export_to_acad_btn = Button(self._form.res_export_table_to_acad)
         self.scale = None
 
     def enable(self) -> None:

@@ -1,14 +1,16 @@
 from pyautocad import Autocad
 import win32com.client
-from comtypes.automation import VARIANT
-from ctypes import byref
+from array import array
 from projectutils import show_error_window
+from view.components import Input
 from view.results import Results
 from .items import Items
 from observer import Subject, Observer
-from typing import List, Union
+from typing import List, Union, Callable
 from .text import Text
-from view.table_data import DataItem
+from view.table_data import DataItem, TableData
+from comtypes.automation import VARIANT
+from model.table import Table
 
 
 class Acad(Subject, Observer):
@@ -19,6 +21,7 @@ class Acad(Subject, Observer):
         self._shell = win32com.client.Dispatch("WScript.Shell")
         self._selected_items = None
         self.acad_text: Union[Text, None] = None
+        self.acad_table: Union[Table, None] = None
         self._observers: List[Observer] = []
 
     def attach(self, observer: Observer) -> None:
@@ -40,13 +43,12 @@ class Acad(Subject, Observer):
         try:
             if self.doc.SelectionSets.Count > 0:
                 self.doc.SelectionSets.Item("SS1").Delete()
-        except Exception:
-            show_error_window('Ошибка при выделение объектов!')
-        finally:
             selected = self.doc.SelectionSets.Add("SS1")
             selected.SelectOnScreen()
             self._selected_items = Items(selected).get_items
             self.notify()
+        except Exception:
+            show_error_window('Ошибка при выделение объектов!')
 
     def inscribe_text(self, data_items: List[DataItem], scale: float) -> None:
         self.acad_text = Text(self.acad)
@@ -59,4 +61,15 @@ class Acad(Subject, Observer):
     def update(self, subject: Results) -> None:
         if self.acad_text:
             self.acad_text.clear()
-        self.inscribe_text(subject.table_data.data, subject.scale)
+        self.inscribe_text(subject.table_data.get_data(), subject.scale)
+
+    def get_point(self, message_text="Выберете точку"):
+        self.expand_acad()
+        return array('d', self.doc.Utility.GetPoint(VARIANT.missing, message_text))
+
+    def create_table(self, scale: Input, ui_data: TableData) -> Callable:
+        def fun() -> None:
+            initial_point = self.get_point()
+            self.acad_table = Table(self.acad, scale.get_value(), initial_point)
+            self.acad_table.draw_table(ui_data.get_data())
+        return fun

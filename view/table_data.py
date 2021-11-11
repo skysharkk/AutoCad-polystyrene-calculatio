@@ -47,8 +47,7 @@ class TableData:
     def __init__(self):
         self._data: List[DataItem] = []
 
-    @property
-    def data(self):
+    def get_data(self):
         return self._data
 
     @staticmethod
