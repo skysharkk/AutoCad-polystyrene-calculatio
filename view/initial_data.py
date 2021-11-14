@@ -71,13 +71,13 @@ class InitialData(Observer, Subject):
         self.form.init_data.setEnabled(True)
 
     def disable(self) -> None:
-        self.form.init_data.setDisabled(True)
+        self.form.init_data.setEnabled(False)
 
     def update(self, subject: Acad) -> None:
         self.data = Data(
             self.scale.get_value(),
-            self.poly_type_group.get_checked_radio_button(),
-            self.depth.get_value(),
+            self.types_table.get_selected_item()[1][1].decode(),
+            self.types_table.get_selected_item()[1][0],
             subject.selected_items
         )
         self.notify()
