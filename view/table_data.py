@@ -1,10 +1,11 @@
 from __future__ import annotations
 from collections import namedtuple
-from typing import List, TYPE_CHECKING, Tuple
+from typing import List, TYPE_CHECKING, Tuple, Union
 from projectutils import round_half_up
 from dataclasses import dataclass
 from projectutils import get_corner_coordinates
 from projectutils import Points
+from projectutils.auxiliary_utulities import show_error_window
 
 if TYPE_CHECKING:
     from .initial_data import Data
@@ -22,7 +23,7 @@ class DataItem:
     amount: str
     volume: str
     note: str
-    coordinates: List[Tuple[float, ...]]
+    coordinates: Union[List[Tuple[float, ...]], None]
 
     def increase_amount(self):
         self.amount = str(int(self.amount) + 1)
@@ -101,6 +102,18 @@ class TableData:
             if not self._coordinates_is_exist(data_item.coordinates[0]):
                 if len(self._data) == 0 or not self._increase_amount_if_exist(data_item):
                     self._data.append(data_item)
+
+    def import_data_from_list(self, data: List[List[str]]) -> None:
+        if len(self._data) == 0:
+            for data_el in data:
+                self._data.append(
+                    DataItem(
+                        *data_el,
+                        None
+                    )
+                )
+        else:
+            show_error_window("Очистите таблицу")
 
     def data_to_list(self) -> List[List[str]]:
         res = []

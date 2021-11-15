@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from pyautocad import Autocad
 from .text_item import TextItem
 from typing import List
@@ -13,11 +14,12 @@ class Text:
         text_height = 120 / scale
         text_width = 360 / scale
         for data_item in data_items:
-            for coordinate in data_item.coordinates:
-                text_item = TextItem(
-                    self.acad, data_item.pos, text_height, text_width)
-                text_item.inscribe_text(coordinate)
-                self.text_items.append(text_item)
+            if data_item.coordinates:
+                for coordinate in data_item.coordinates:
+                    text_item = TextItem(
+                        self.acad, data_item.pos, text_height, text_width)
+                    text_item.inscribe_text(coordinate)
+                    self.text_items.append(text_item)
 
     def clear(self) -> None:
         for item in self.text_items:
