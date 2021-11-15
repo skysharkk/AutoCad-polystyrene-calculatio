@@ -1,5 +1,7 @@
 import openpyxl
+from openpyxl.styles import NamedStyle, Border, Side
 from typing import List
+import os
 
 
 class Excel:
@@ -27,3 +29,18 @@ class Excel:
             if len(row_data) > 0:
                 res.append(row_data)
         return res
+
+    @staticmethod
+    def get_template(save_path: str, data: List[List[str]]) -> None:
+        wb = openpyxl.Workbook()
+        sheet = wb.active
+        ns = NamedStyle(name='highlight')
+        border = Side(style='thin', color='000000')
+        ns.border = Border(left=border, top=border,
+                           right=border, bottom=border)
+        wb.add_named_style(ns)
+        for row_index, row_data in enumerate(data):
+            sheet.append(row_data)
+            for cell_index, _ in enumerate(row_data):
+                sheet.cell(row_index + 1, cell_index + 1).style = 'highlight'
+        wb.save(save_path)
