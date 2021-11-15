@@ -1,6 +1,7 @@
 from __future__ import annotations
 from typing import List, TYPE_CHECKING
 from observer import Observer, Subject
+from projectutils.auxiliary_utulities import show_error_window
 from .table_data import TableData
 from .uinterface import Ui_Form
 from .components import Button, TableWidget
@@ -27,11 +28,14 @@ class Results(Observer, Subject):
         self.scale = None
 
     def import_data_from_excel(self) -> None:
-        path = QFileDialog.getOpenFileName(
-            filter="Excel (*.xls *.xlsx);;All Files (*)")
-        excel_data = Excel(path[0]).get_data()
-        self.table_data.import_data_from_list(excel_data)
-        self.acad_table.import_data(self.table_data.data_to_list())
+        if self.scale:
+            path = QFileDialog.getOpenFileName(
+                filter="Excel (*.xls *.xlsx);;All Files (*)")
+            excel_data = Excel(path[0]).get_data()
+            self.table_data.import_data_from_list(excel_data)
+            self.acad_table.import_data(self.table_data.data_to_list())
+        else:
+            show_error_window("Введите масштаб")
 
     def enable(self) -> None:
         self._form.results.setEnabled(True)
