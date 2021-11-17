@@ -8,6 +8,7 @@ from view.results import Results
 from .items import Items
 from observer import Subject, Observer
 from typing import List, Union, Callable
+from .polyline import Polyline
 from .text import Text
 from view.table_data import DataItem, TableData
 from comtypes.automation import VARIANT
@@ -23,6 +24,7 @@ class Acad(Subject, Observer):
         self._selected_items = None
         self.acad_text: Union[Text, None] = None
         self.acad_table: Union[Table, None] = None
+        self.polyline = Polyline(self.model)
         self._observers: List[Observer] = []
 
     def attach(self, observer: Observer) -> None:
@@ -64,7 +66,7 @@ class Acad(Subject, Observer):
             self.acad_text.clear()
         self.inscribe_text(subject.table_data.get_data(), subject.scale)
 
-    def get_point(self, message_text="Выберете точку"):
+    def get_point(self, message_text="Выберете точку") -> array:
         self.expand_acad()
         return array('d', self.doc.Utility.GetPoint(VARIANT.missing, message_text))
 

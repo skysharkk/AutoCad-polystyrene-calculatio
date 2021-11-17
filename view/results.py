@@ -33,6 +33,7 @@ class Results(Observer, Subject):
         self.export_to_excel_btn = Button(self._form.res_export_table_to_excel)
         self.export_to_excel_btn.connect_action(self.export_to_excel_action)
         self.scale = None
+        self.draw_objects_btn = Button(self._form.res_draw_pos)
 
     def import_data_from_excel(self) -> None:
         try:
