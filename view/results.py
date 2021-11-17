@@ -9,6 +9,7 @@ from .components import Button, TableWidget
 from PyQt5.QtWidgets import QFileDialog
 from projectutils import Excel
 from datetime import datetime
+from openpyxl.utils.exceptions import InvalidFileException
 
 
 if TYPE_CHECKING:
@@ -34,30 +35,18 @@ class Results(Observer, Subject):
         self.scale = None
 
     def import_data_from_excel(self) -> None:
-        path = QFileDialog.getOpenFileName(
-            filter="Excel (*.xls *.xlsx);;All Files (*)")
-        excel_data = Excel(path[0]).get_data()
-        self.table_data.import_data_from_list(excel_data)
-        self.acad_table.import_data(self.table_data.data_to_list())
+        try:
+            path = QFileDialog.getOpenFileName(
+                filter="Excel (*.xls *.xlsx);;All Files (*)")
+            excel_data = Excel(path[0]).get_data()
+            self.table_data.import_data_from_list(excel_data)
+            self.acad_table.import_data(self.table_data.data_to_list())
+        except InvalidFileException:
+            print("invalid file format")
 
     def export_to_excel_action(self) -> None:
-        title = [
-            "Поз.",
-            "Обозначение",
-            "Длина, мм",
-            "Высота, мм",
-            "Ширина, мм",
-            "Кол., шт.",
-            "Объем, м3",
-            "Примечания"
-        ],
-        path = QFileDialog.getSaveFileName(
-            directory=f"acad_table_{datetime.now().second}.xlsx", filter="Excel (*.xls *.xlsx)")[0]
-        Excel.get_template(path, [*title, *self.table_data.data_to_list()])
-
-    def template_btn_action(self) -> None:
-        template = [
-            [
+        try:
+            title = [
                 "Поз.",
                 "Обозначение",
                 "Длина, мм",
@@ -67,13 +56,34 @@ class Results(Observer, Subject):
                 "Объем, м3",
                 "Примечания"
             ],
-            ["1", "ППТ-15-А-Р", "", "", "", "", "", ""],
-            ["2",
-                "Эффективный утеплитель λ ≤ 0,034 Вт/(м·°C)", "", "", "", "", "", ""],
-        ]
-        path = QFileDialog.getSaveFileName(
-            directory="template.xlsx", filter="Excel (*.xls *.xlsx)")[0]
-        Excel.get_template(path, template)
+            path = QFileDialog.getSaveFileName(
+                directory=f"acad_table_{datetime.now().second}.xlsx", filter="Excel (*.xls *.xlsx)")[0]
+            Excel.get_template(path, [*title, *self.table_data.data_to_list()])
+        except FileNotFoundError:
+            print("invalid file format")
+
+    def template_btn_action(self) -> None:
+        try:
+            template = [
+                [
+                    "Поз.",
+                    "Обозначение",
+                    "Длина, мм",
+                    "Высота, мм",
+                    "Ширина, мм",
+                    "Кол., шт.",
+                    "Объем, м3",
+                    "Примечания"
+                ],
+                ["1", "ППТ-15-А-Р", "", "", "", "", "", ""],
+                ["2",
+                    "Эффективный утеплитель λ ≤ 0,034 Вт/(м·°C)", "", "", "", "", "", ""],
+            ]
+            path = QFileDialog.getSaveFileName(
+                directory="template.xlsx", filter="Excel (*.xls *.xlsx)")[0]
+            Excel.get_template(path, template)
+        except FileNotFoundError:
+            print("invalid file format")
 
     def enable(self) -> None:
         self._form.results.setEnabled(True)
