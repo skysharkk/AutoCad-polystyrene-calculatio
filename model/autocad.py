@@ -69,7 +69,10 @@ class Acad(Subject, Observer):
 
     def create_table(self, scale: Input, ui_data: TableData) -> Callable:
         def fun() -> None:
-            initial_point = self.get_point()
-            self.acad_table = Table(self.acad, scale.get_value(), initial_point)
-            self.acad_table.draw_table(ui_data.get_data())
+            if not scale.is_empty():
+                initial_point = self.get_point()
+                self.acad_table = Table(self.acad, scale.get_value(), initial_point)
+                self.acad_table.draw_table(ui_data.get_data())
+            else:
+                show_error_window('Введите масштаб!')
         return fun
