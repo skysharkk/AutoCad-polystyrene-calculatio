@@ -12,6 +12,8 @@ def main():
         acad.create_table(ui.initial_data.scale, ui.results.table_data)
     )
     ui.results.attach(acad)
+    ui.results.draw_objects_btn.connect_action(
+        acad.draw_objects(ui.results.table_data))
     ui.window.exec_app()
 
 

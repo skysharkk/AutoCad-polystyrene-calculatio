@@ -9,7 +9,7 @@ from .items import Items
 from observer import Subject, Observer
 from typing import List, Union, Callable
 from .polyline import Polyline
-from .text import Text
+from .text import Text, TextItem
 from view.table_data import DataItem, TableData
 from comtypes.automation import VARIANT
 from model.table import Table
@@ -75,10 +75,34 @@ class Acad(Subject, Observer):
             if not scale.is_empty():
                 try:
                     initial_point = self.get_point()
-                    self.acad_table = Table(self.acad, scale.get_value(), initial_point)
+                    self.acad_table = Table(
+                        self.acad, scale.get_value(), initial_point)
                     self.acad_table.draw_table(ui_data.get_data())
                 except _ctypes.COMError:
                     print("point not selected")
             else:
                 show_error_window('Введите масштаб!')
         return fun
+
+    def draw_objects(self, ui_data: TableData) -> Callable:
+        def fn() -> None:
+            initial_point = self.get_point()
+            data = ui_data.get_data()
+            for data_item in data:
+                for _ in range(int(data_item.amount)):
+                    initial_point[1] -= 50
+                    obj_description = TextItem(
+                        self.acad, f"{data_item.poly_type.decode()} {data_item.depth}",
+                        50,
+                        1000
+                    )
+                    obj_description.draw_text(initial_point)
+                    initial_point[1] -= 50
+                    self.polyline.draw_rectangle(
+                        initial_point,
+                        float(data_item.width),
+                        float(data_item.height)
+                    )
+                    initial_point[1] -= float(data_item.height)
+
+        return fn
