@@ -13,7 +13,14 @@ def main():
     )
     ui.results.attach(acad)
     ui.results.draw_objects_btn.connect_action(
-        acad.draw_objects(ui.results.table_data))
+        acad.draw_objects(ui.results.table_data)
+    )
+    ui.waste.draw_waste_btn.connect_action(
+        acad.draw_waste
+    )
+    ui.waste.calc_waste_btn.connect_action(
+        acad.draw_waste_result(ui.initial_data.scale, ui.results.table_data.calc_overall_volume)
+    )
     ui.window.exec_app()
 
 

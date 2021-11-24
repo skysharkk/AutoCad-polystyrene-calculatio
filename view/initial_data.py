@@ -1,9 +1,12 @@
+from __future__ import annotations
 from collections import namedtuple
-from typing import List
+from typing import List, TYPE_CHECKING
 from view.components import Input, GroupBox, Button, TreeWidget
 from view.uinterface import Ui_Form
 from observer import Observer, Subject
-from model import Acad
+
+if TYPE_CHECKING:
+    from model import Acad
 
 Data = namedtuple("Data", ["scale", "poly_type", "depth", "coordinates"])
 

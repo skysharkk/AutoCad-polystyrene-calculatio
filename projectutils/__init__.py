@@ -1,4 +1,3 @@
-# from greedypacker import BinManager
-# from greedypacker import Item
+from .greedypacker import BinManager, Item
 from .auxiliary_utulities import *
 from .excel import Excel

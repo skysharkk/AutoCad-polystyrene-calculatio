@@ -11,6 +11,7 @@ pyautocad = "^0.2.0"
 pywin32 = "^301"
 PyQt5 = "^5.15.5"
 openpyxl = "^3.0.9"
+sortedcontainers = "^2.4.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"

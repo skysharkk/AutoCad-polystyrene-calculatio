@@ -13,6 +13,11 @@ from .text import Text, TextItem
 from view.table_data import DataItem, TableData
 from comtypes.automation import VARIANT
 from model.table import Table
+from .waste import Waste
+from .format_data_for_waste import format_data_for_waste
+from projectutils import Item
+
+from model import waste
 
 
 class Acad(Subject, Observer):
@@ -26,6 +31,7 @@ class Acad(Subject, Observer):
         self.acad_table: Union[Table, None] = None
         self.polyline = Polyline(self.model)
         self._observers: List[Observer] = []
+        self._waste = None
 
     def attach(self, observer: Observer) -> None:
         self._observers.append(observer)
@@ -65,6 +71,8 @@ class Acad(Subject, Observer):
         if self.acad_text:
             self.acad_text.clear()
         self.inscribe_text(subject.table_data.get_data(), subject.scale)
+        self._waste = Waste(format_data_for_waste(
+            subject.table_data.get_data()))
 
     def get_point(self, message_text="Выберете точку") -> array:
         self.expand_acad()
@@ -90,19 +98,76 @@ class Acad(Subject, Observer):
             data = ui_data.get_data()
             for data_item in data:
                 for _ in range(int(data_item.amount)):
-                    initial_point[1] -= 50
+                    self.polyline.draw_rectangle(
+                        initial_point,
+                        float(data_item.width),
+                        float(data_item.height)
+                    )
+                    initial_point[1] += float(data_item.height)
+                    initial_point[1] += 100
                     obj_description = TextItem(
                         self.acad, f"{data_item.poly_type.decode()} {data_item.depth}",
                         50,
                         1000
                     )
                     obj_description.draw_text(initial_point)
-                    initial_point[1] -= 50
+                    initial_point[1] += 50
+        return fn
+
+    def draw_waste(self) -> None:
+        initial_point = self.get_point()
+        waste_data = self._waste.result
+        for poly_type in waste_data.keys():
+            for depth in waste_data[poly_type].keys():
+                for bins in waste_data[poly_type][depth]:
                     self.polyline.draw_rectangle(
                         initial_point,
-                        float(data_item.width),
-                        float(data_item.height)
+                        self._waste.original_width,
+                        self._waste.original_height
                     )
-                    initial_point[1] -= float(data_item.height)
+                    for item in bins.items:
+                        self.polyline.draw_rectangle(
+                            array("d", [initial_point[0] + item.x,
+                                        initial_point[1] + item.y, 0]),
+                            item.width,
+                            item.height,
+                            3
+                        )
+                    for free_rect in bins.freerects:
+                        self.polyline.draw_rectangle(
+                            array(
+                                "d",
+                                [initial_point[0] + free_rect.x,
+                                    initial_point[1] + free_rect.y, 0]
+                            ),
+                            free_rect.width,
+                            free_rect.height,
+                            1
+                        )
+                    initial_point[1] += self._waste.original_height
+                    initial_point[1] += 100
+                obj_description = TextItem(
+                    self.acad,
+                    f"{poly_type} {depth}",
+                    50,
+                    1000
+                )
+                obj_description.draw_text(initial_point)
+                initial_point[1] += 50
 
+    def draw_waste_result(self, scale: Input, calc_overall_volume: Callable[..., dict]) -> Callable:
+        def fn() -> None:
+            scale_value = scale.get_value()
+            waste_result = self._waste.calc_waste(calc_overall_volume)
+            initial_point = self.get_point()
+            waste_str = ""
+            for index, poly_type in enumerate(waste_result.keys()):
+                waste_str += f"{index + 1}.Возвратные остатки - {waste_result[poly_type]['returnable']} м\u00b3, невозвратные(неиспользуемые в производстве) - {waste_result[poly_type]['non_returnable']} м\u00b3 ({waste_result[poly_type]['non_returnable_percent']}%) - для {poly_type}.\n"
+            waste_text = TextItem(
+                self.acad,
+                waste_str,
+                100 / scale_value,
+                7400 / scale_value
+            )
+            waste_text.draw_text(initial_point)
         return fn

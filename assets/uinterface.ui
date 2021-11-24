@@ -42,8 +42,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>412</width>
-        <height>822</height>
+        <width>427</width>
+        <height>775</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
@@ -282,35 +282,6 @@
           <string>Отходы</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_5">
-          <item>
-           <widget class="QGroupBox" name="groupBox_5">
-            <property name="title">
-             <string>Общий объем ППТ</string>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_7">
-             <item>
-              <widget class="QLabel" name="label_3">
-               <property name="text">
-                <string>ППТ-15</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="lineEdit_3"/>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_4">
-               <property name="text">
-                <string>Эффективный</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="lineEdit_4"/>
-             </item>
-            </layout>
-           </widget>
-          </item>
           <item>
            <layout class="QVBoxLayout" name="verticalLayout">
             <item>

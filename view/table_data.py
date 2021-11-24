@@ -47,9 +47,13 @@ class DataItem:
 class TableData:
     def __init__(self):
         self._data: List[DataItem] = []
+        self._overall_volume = {}
 
     def get_data(self):
         return self._data
+
+    def get_overall_volume(self):
+        return self._overall_volume
 
     @staticmethod
     def _calc_sizes(scale: float, coordinates: Points) -> Sizes:
@@ -128,3 +132,15 @@ class TableData:
     def remove_item(self, pos: int) -> None:
         self._data.pop(pos)
         self._update_pos()
+
+    def calc_overall_volume(self) -> dict:
+        overall_volume = {}
+        for item in self._data:
+            if item.poly_type.decode() not in overall_volume:
+                overall_volume[item.poly_type.decode()] = 0
+            overall_volume[item.poly_type.decode()] = round_half_up(
+                overall_volume[item.poly_type.decode()] + (float(item.volume) * (float(item.amount))),
+                2,
+                False
+            )
+        return overall_volume

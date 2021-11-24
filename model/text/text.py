@@ -23,5 +23,8 @@ class Text:
 
     def clear(self) -> None:
         for item in self.text_items:
-            item.acad_text.Delete()
+            try:
+                item.acad_text.Delete()
+            except Exception:
+                print("Text is not exist")
         self.text_items = []
