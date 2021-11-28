@@ -17,9 +17,7 @@ jobs:
         with:
           python-version: "3.9"
       - name: Install poetry
-        run: |
-          curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
-          exec $SHELL
+        uses: snok/install-poetry@v1
       - name: Export requirements
         run: poetry export -f requirements.txt --output requirements.txt
       - name: Download python 3.8.10
