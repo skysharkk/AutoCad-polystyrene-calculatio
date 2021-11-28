@@ -1,1 +1,18 @@
-# AutoCad-polystyrene-calculatio
+# Приложение автокад для раскроя утеплителя
+
+[Ссылка для скачаивания](https://github.com/skysharkk/AutoCad-polystyrene-calculatio/releases)
+
+## Системнае требования
+
+---
+- Python 3.8.10;
+- Autocad (стаблино: версия 2015, в более новых версия возможны сбои);
+- Windows 7, 10, 11.
+---
+
+## Установка и запуск
+
+
+Для установки зависимостей запустить файл install.bat.
+
+Для запуска приложение run.vbs.
