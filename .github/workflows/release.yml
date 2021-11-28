@@ -29,12 +29,14 @@ jobs:
       - name: Create install batch file
         run: echo -en "@echo off\npython-3.8.10\python.exe get-pip.py\npython-3.8.10\Scripts\pip.exe install requirements.txt" > install.bat
       - name: Create run batch file
-        run: echo -en "@echo off\npython-3.8.10\python.exe ..\controller.py" > bin/run.bat
+        run: |
+          mkdir bin
+          echo -en "@echo off\npython-3.8.10\python.exe ..\controller.py" > bin/run.bat
       - name: Create run vbs script
-        run: echo -en "Set objShell = WScript.CreateObject("WScript.Shell")\nobjShell.Run(\"bin\run.bat"), 0, True" > run.vbs
+        run: echo -en "Set objShell = WScript.CreateObject(\"WScript.Shell\")\nobjShell.Run(\"bin\run.bat\"), 0, True" > run.vbs
       - name: Create ZIP archive
         run: |
-          md dist
+          mkdir dist
           zip -r dist/autocad-polystyrene-calculatio-x64 ./ -x *.git* mypy.ini poetry.lock .editorconfig
       - name: Create Release
         uses: ncipollo/release-action@v1
