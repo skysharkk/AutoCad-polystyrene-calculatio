@@ -28,16 +28,18 @@ jobs:
           rm -rf python-3.8.10-embed-amd64.zip
       - name: Download pip
         run: wget https://bootstrap.pypa.io/get-pip.py -P python-3.8.10
+      - name: Configurate pip
+        run: echo import site >> python-3.8.10/python38._pth
       - name: Create install batch file
         run: |
-          printf "%s\n" "@echo off" "python-3.8.10\python.exe python-3.8.10\get-pip.py" "python-3.8.10\Scripts\pip.exe install requirements.txt" > install.bat
+          printf "%s\n" "@echo off" "python-3.8.10\python.exe python-3.8.10\get-pip.py" "python-3.8.10\Scripts\pip.exe install -r requirements.txt" "pause" > install.bat
       - name: Create run batch file
         run: |
           mkdir bin
-          printf "%s\n" "@echo off" "..\python-3.8.10\python.exe ..\controller.py" > bin/run.bat
+          printf "%s\n" "@echo off" "python-3.8.10\python.exe controller.py" > bin/run.bat
       - name: Create run vbs script
         run: |
-          printf "%s\n" "Set objShell = WScript.CreateObject('WScript.Shell')" "objShell.Run('bin\run.bat'), 0, True" > run.vbs
+          printf '%s\n' 'Set objShell = WScript.CreateObject("WScript.Shell")' 'objShell.Run("bin\run.bat"), 0, True' > run.vbs
       - name: Create ZIP archive
         run: |
           mkdir dist
