@@ -7,6 +7,7 @@ sys.path.append(os.getcwd())
 
 from view import View
 from model import Acad
+import logging
 
 
 
