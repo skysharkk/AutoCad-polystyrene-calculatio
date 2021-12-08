@@ -1,16 +1,30 @@
 from __future__ import annotations
 from collections import namedtuple
 from typing import List, TYPE_CHECKING, Tuple, Union
+from observer import Observer
 from projectutils import round_half_up
 from dataclasses import dataclass
 from projectutils import get_corner_coordinates
 from projectutils import Points
 from projectutils.auxiliary_utulities import show_error_window
+from enum import Enum
 
 if TYPE_CHECKING:
     from .initial_data import Data
+    from .components.table import TableWidget
 
 Sizes = namedtuple("Sizes", ["width", "height"])
+
+
+class DataItemPos(Enum):
+    pos = 0
+    poly_type = 1
+    width = 2
+    height = 3
+    depth = 4
+    amount = 5
+    volume = 6
+    note = 7
 
 
 @dataclass
@@ -23,6 +37,7 @@ class DataItem:
     amount: str
     volume: str
     note: str
+    disabled_cells: List[int]
     coordinates: Union[List[Tuple[float, ...]], None]
 
     def increase_amount(self):
@@ -44,7 +59,7 @@ class DataItem:
         return [self.width, self.height, self.depth]
 
 
-class TableData:
+class TableData(Observer):
     def __init__(self):
         self._data: List[DataItem] = []
         self._overall_volume = {}
@@ -101,6 +116,7 @@ class TableData:
                 str(TableData._calc_volume(
                     sizes.width, sizes.height, acad_data.depth)),
                 "",
+                [1],
                 [item.coordinates]
             )
             if not self._coordinates_is_exist(data_item.coordinates[0]):
@@ -113,7 +129,7 @@ class TableData:
                 self._data.append(
                     DataItem(
                         *data_el,
-                        None
+                        coordinates=None
                     )
                 )
         else:
@@ -144,3 +160,12 @@ class TableData:
                 False
             )
         return overall_volume
+
+    def update(self, subject: TableWidget) -> None:
+        item = self._data[subject.changed_item_data.row]
+        prop_name = DataItemPos(subject.changed_item_data.column).name
+        if prop_name == "poly_type":
+            new_data = subject.changed_item_data.new_data.encode()
+        else:
+            new_data = subject.changed_item_data.new_data
+        setattr(item, prop_name, new_data)

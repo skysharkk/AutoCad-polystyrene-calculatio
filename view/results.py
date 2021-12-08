@@ -1,7 +1,6 @@
 from __future__ import annotations
 from typing import List, TYPE_CHECKING
 from observer import Observer, Subject
-from projectutils.auxiliary_utulities import show_error_window
 from .table_data import TableData
 from .uinterface import Ui_Form
 from .components import Button, TableWidget
@@ -40,7 +39,7 @@ class Results(Observer, Subject):
                 filter="Excel (*.xls *.xlsx);;All Files (*)")
             excel_data = Excel(path[0]).get_data()
             self.table_data.import_data_from_list(excel_data)
-            self.acad_table.import_data(self.table_data.data_to_list())
+            self.acad_table.import_data(self.table_data)
         except InvalidFileException:
             print("invalid file format")
 
@@ -94,12 +93,12 @@ class Results(Observer, Subject):
     def update(self, subject: InitialData) -> None:
         self.scale = subject.scale.get_value()
         self.table_data.update_data(subject.data)
-        self.acad_table.import_data(self.table_data.data_to_list())
+        self.acad_table.import_data(self.table_data)
         self.notify()
 
     def _remove_row(self) -> None:
         self.table_data. remove_item(self.acad_table.remove_row())
-        self.acad_table.import_data(self.table_data.data_to_list())
+        self.acad_table.import_data(self.table_data)
         self.notify()
 
     def attach(self, observer: Observer) -> None:

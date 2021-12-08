@@ -26,3 +26,6 @@ class Cell:
         self.create_cell_item()
         self.table.setItem(self.position.row, self.position.column, self.item)
         self.item.setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+
+    def disable_cell(self):
+        self.item.setFlags(QtCore.Qt.ItemFlag.ItemIsEnabled)

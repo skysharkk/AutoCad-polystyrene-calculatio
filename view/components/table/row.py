@@ -29,3 +29,6 @@ class Row:
 
     def change_cell_value(self, cell_index: int, value: str):
         self.row_cells[cell_index].set_data_to_cell(value)
+
+    def disable_cell(self, pos: int):
+        self.row_cells[pos].disable_cell()

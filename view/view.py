@@ -11,3 +11,4 @@ class View:
         self.results = Results(self.window.form)
         self.initial_data.attach(self.results)
         self.waste = Waste(self.window.form)
+        self.results.acad_table.attach(self.results.table_data)
