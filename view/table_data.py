@@ -146,8 +146,9 @@ class TableData(Observer):
             item.pos = str(index + 1)
 
     def remove_item(self, pos: int) -> None:
-        self._data.pop(pos)
-        self._update_pos()
+        if len(self._data) > 0:
+            self._data.pop(pos)
+            self._update_pos()
 
     def calc_overall_volume(self) -> dict:
         overall_volume = {}
