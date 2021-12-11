@@ -56,5 +56,5 @@ class Table:
         )
         self._table.DeleteRows(0, 1)
         self._table.VertCellMargin = 0
-        # self._table.HorzCellMargin = 0
+        self._table.HorzCellMargin = 100 / self.scale
         self._update_table(converted_data)

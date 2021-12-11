@@ -111,7 +111,7 @@ class PolyTableData:
                     self._title_line_type if index == 0 else self._last_item_line_type if index == len(
                         self._initial_data
                     ) - 1 else self._common_line_type,
-                    2.7
+                    108 / self._scale
                 )
             )
         self.rows_amount = len(self._table_data)

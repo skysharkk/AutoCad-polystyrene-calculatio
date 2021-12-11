@@ -46,7 +46,7 @@ jobs:
       - name: Create ZIP archive
         run: |
           mkdir dist
-          zip -r dist/autocad-polystyrene-calculatio-x64-v.${{ steps.vars.outputs.tag }} ./ -x *.git* mypy.ini poetry.lock .editorconfig dist
+          zip -r dist/autocad-polystyrene-calculatio-x64-v.${{ steps.vars.outputs.tag }}.zip ./ -x *.git* mypy.ini poetry.lock .editorconfig dist
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
