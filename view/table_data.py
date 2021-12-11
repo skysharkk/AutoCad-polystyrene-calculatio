@@ -79,7 +79,10 @@ class TableData(Observer):
 
     @staticmethod
     def _calc_volume(width: int, height: int, depth: int) -> float:
-        return round_half_up((width / 1000) * (height / 1000) * (depth / 1000), 2, False)
+        for i in range(2, 5):
+            volume = round_half_up((width / 1000) * (height / 1000) * (depth / 1000), i, False)
+            if volume != 0:
+                return volume
 
     def _coordinates_is_exist(self, item_coordinates: Tuple[float, ...]) -> bool:
         for el in self._data:
