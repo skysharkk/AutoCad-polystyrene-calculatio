@@ -12,6 +12,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Get the version
+        id: Vars
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
       - name: Set up Python 3.9
         uses: actions/setup-python@v2
         with:
@@ -43,7 +46,7 @@ jobs:
       - name: Create ZIP archive
         run: |
           mkdir dist
-          zip -r dist/autocad-polystyrene-calculatio-x64 ./ -x *.git* mypy.ini poetry.lock .editorconfig dist
+          zip -r dist/autocad-polystyrene-calculatio-x64-v.${{ steps.vars.outputs.tag }} ./ -x *.git* mypy.ini poetry.lock .editorconfig dist
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
