@@ -80,7 +80,8 @@ class TableData(Observer):
     @staticmethod
     def _calc_volume(width: int, height: int, depth: int) -> float:
         for i in range(2, 5):
-            volume = round_half_up((width / 1000) * (height / 1000) * (depth / 1000), i, False)
+            volume = round_half_up(
+                (width / 1000) * (height / 1000) * (depth / 1000), i, False)
             if volume != 0:
                 return volume
 
@@ -109,6 +110,9 @@ class TableData(Observer):
                 acad_data.scale,
                 get_corner_coordinates(item.coordinates)
             )
+            if sizes.width > 2000 or sizes.height > 2000:
+                print("lol")
+                raise ValueError("position sizes greater than 2000 mm")
             data_item = DataItem(
                 str(len(self._data) + 1),
                 acad_data.poly_type.encode("utf-8"),
@@ -159,7 +163,8 @@ class TableData(Observer):
             if item.poly_type.decode() not in overall_volume:
                 overall_volume[item.poly_type.decode()] = 0
             overall_volume[item.poly_type.decode()] = round_half_up(
-                overall_volume[item.poly_type.decode()] + (float(item.volume) * (float(item.amount))),
+                overall_volume[item.poly_type.decode()] +
+                (float(item.volume) * (float(item.amount))),
                 2,
                 False
             )

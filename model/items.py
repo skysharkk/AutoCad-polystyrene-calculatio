@@ -14,7 +14,8 @@ class Items:
         try:
             for index in range(self._acad_items.Count):
                 el = self._acad_items.Item(index)
-                self._items.append(Item(el))
+                if el.ObjectName == "AcDbPolyline":
+                    self._items.append(Item(el))
         except Exception:
             show_error_window('Ошибка при выделение объектов!')
 
