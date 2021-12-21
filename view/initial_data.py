@@ -76,14 +76,15 @@ class InitialData(Observer, Subject):
     def disable(self) -> None:
         self.form.init_data.setEnabled(False)
 
-    def update(self, subject: Acad) -> None:
-        self.data = Data(
-            self.scale.get_value(),
-            self.types_table.get_selected_item()[1][1].decode(),
-            self.types_table.get_selected_item()[1][0],
-            subject.selected_items
-        )
-        self.notify()
+    def update(self, subject: Acad, event: str) -> None:
+        if event == "update":
+            self.data = Data(
+                self.scale.get_value(),
+                self.types_table.get_selected_item()[1][1].decode(),
+                self.types_table.get_selected_item()[1][0],
+                subject.selected_items
+            )
+            self.notify("update")
 
     def attach(self, observer: Observer) -> None:
         self._observers.append(observer)
@@ -91,6 +92,6 @@ class InitialData(Observer, Subject):
     def detach(self, observer: Observer) -> None:
         self._observers.remove(observer)
 
-    def notify(self) -> None:
+    def notify(self, event: str) -> None:
         for observer in self._observers:
-            observer.update(self)
+            observer.update(self, event)

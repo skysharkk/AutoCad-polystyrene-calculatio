@@ -37,10 +37,11 @@ class TableWidget(Subject):
             row.disable_cell(disabled_cell_pos)
 
     def import_data(self, table_data: TableData) -> None:
-        self._clear_table()
+        self.clear_table()
         data = table_data.data_to_list()
         for data_index, data_el in enumerate(data):
-            self.insert_row(data_el, data_index, table_data.get_data()[data_index].disabled_cells)
+            self.insert_row(data_el, data_index, table_data.get_data()[
+                            data_index].disabled_cells)
 
     def change_cell_value(self, row_index: int, column_index: int, value: str):
         self.table_data[row_index].change_cell_value(column_index, value)
@@ -57,7 +58,7 @@ class TableWidget(Subject):
         self.table_widget.resizeColumnsToContents()
         return current_row
 
-    def _clear_table(self) -> None:
+    def clear_table(self) -> None:
         while self.table_widget.rowCount() > 0:
             self.table_widget.removeRow(0)
         self.table_data.clear()
@@ -70,7 +71,7 @@ class TableWidget(Subject):
                 current_item.column(),
                 current_item.text()
             )
-            self.notify()
+            self.notify("update")
 
     def attach(self, observer: Observer) -> None:
         self._observers.append(observer)
@@ -78,6 +79,6 @@ class TableWidget(Subject):
     def detach(self, observer: Observer) -> None:
         self._observers.remove(observer)
 
-    def notify(self) -> None:
+    def notify(self, event: str) -> None:
         for observer in self._observers:
-            observer.update(self)
+            observer.update(self, event)

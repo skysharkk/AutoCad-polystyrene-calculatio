@@ -111,7 +111,6 @@ class TableData(Observer):
                 get_corner_coordinates(item.coordinates)
             )
             if sizes.width > 2000 or sizes.height > 2000:
-                print("lol")
                 raise ValueError("position sizes greater than 2000 mm")
             data_item = DataItem(
                 str(len(self._data) + 1),
@@ -170,11 +169,16 @@ class TableData(Observer):
             )
         return overall_volume
 
-    def update(self, subject: TableWidget) -> None:
-        item = self._data[subject.changed_item_data.row]
-        prop_name = DataItemPos(subject.changed_item_data.column).name
-        if prop_name == "poly_type":
-            new_data = subject.changed_item_data.new_data.encode()
-        else:
-            new_data = subject.changed_item_data.new_data
-        setattr(item, prop_name, new_data)
+    def update(self, subject: TableWidget, event: str) -> None:
+        if event == "update":
+            item = self._data[subject.changed_item_data.row]
+            prop_name = DataItemPos(subject.changed_item_data.column).name
+            if prop_name == "poly_type":
+                new_data = subject.changed_item_data.new_data.encode()
+            else:
+                new_data = subject.changed_item_data.new_data
+            setattr(item, prop_name, new_data)
+
+    def clear_data(self) -> None:
+        self._data.clear()
+        self._overall_volume.clear()

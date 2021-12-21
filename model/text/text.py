@@ -28,3 +28,6 @@ class Text:
             except Exception:
                 print("Text is not exist")
         self.text_items = []
+
+    def detach_text(self):
+        self.text_items.clear()

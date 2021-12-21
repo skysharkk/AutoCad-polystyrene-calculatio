@@ -32,6 +32,8 @@ class Results(Observer, Subject):
         self.export_to_excel_btn.connect_action(self.export_to_excel_action)
         self.scale = None
         self.draw_objects_btn = Button(self._form.res_draw_pos)
+        self.clear_all_data = Button(self._form.clear_all_data)
+        self.clear_all_data.connect_action(self.clear_data)
 
     def import_data_from_excel(self) -> None:
         try:
@@ -40,6 +42,7 @@ class Results(Observer, Subject):
             excel_data = Excel(path[0]).get_data()
             self.table_data.import_data_from_list(excel_data)
             self.acad_table.import_data(self.table_data)
+            self.is_cleared = False
         except InvalidFileException:
             print("invalid file format")
 
@@ -90,16 +93,17 @@ class Results(Observer, Subject):
     def disable(self) -> None:
         self._form.results.setDisabled(True)
 
-    def update(self, subject: InitialData) -> None:
-        self.scale = subject.scale.get_value()
-        self.table_data.update_data(subject.data)
-        self.acad_table.import_data(self.table_data)
-        self.notify()
+    def update(self, subject: InitialData, event: str) -> None:
+        if event == "update":
+            self.scale = subject.scale.get_value()
+            self.table_data.update_data(subject.data)
+            self.acad_table.import_data(self.table_data)
+            self.notify("update")
 
     def _remove_row(self) -> None:
-        self.table_data. remove_item(self.acad_table.remove_row())
+        self.table_data.remove_item(self.acad_table.remove_row())
         self.acad_table.import_data(self.table_data)
-        self.notify()
+        self.notify("update")
 
     def attach(self, observer: Observer) -> None:
         self._observers.append(observer)
@@ -107,6 +111,11 @@ class Results(Observer, Subject):
     def detach(self, observer: Observer) -> None:
         self._observers.remove(observer)
 
-    def notify(self) -> None:
+    def notify(self, event: str) -> None:
         for observer in self._observers:
-            observer.update(self)
+            observer.update(self, event)
+
+    def clear_data(self) -> None:
+        self.table_data.clear_data()
+        self.acad_table.clear_table()
+        self.notify("clear")

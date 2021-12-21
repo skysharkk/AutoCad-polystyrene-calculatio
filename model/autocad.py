@@ -39,9 +39,9 @@ class Acad(Subject, Observer):
     def detach(self, observer: Observer) -> None:
         self._observers.remove(observer)
 
-    def notify(self) -> None:
+    def notify(self, event: str) -> None:
         for observer in self._observers:
-            observer.update(self)
+            observer.update(self, event)
 
     def expand_acad(self) -> None:
         self._shell.AppActivate(self.acad.app.Caption)
@@ -55,7 +55,7 @@ class Acad(Subject, Observer):
             selected = self.doc.SelectionSets.Add("SS1")
             selected.SelectOnScreen()
             self._selected_items = Items(selected).get_items
-            self.notify()
+            self.notify("update")
         except Exception:
             show_error_window('Ошибка при выделение объектов!')
 
@@ -67,12 +67,15 @@ class Acad(Subject, Observer):
     def selected_items(self):
         return self._selected_items
 
-    def update(self, subject: Results) -> None:
-        if self.acad_text:
-            self.acad_text.clear()
-        self.inscribe_text(subject.table_data.get_data(), subject.scale)
-        self._waste = Waste(format_data_for_waste(
-            subject.table_data.get_data()))
+    def update(self, subject: Results, event: str) -> None:
+        if event == "update":
+            if self.acad_text:
+                self.acad_text.clear()
+            self.inscribe_text(subject.table_data.get_data(), subject.scale)
+            self._waste = Waste(format_data_for_waste(
+                subject.table_data.get_data()))
+        if event == "clear":
+            self.acad_text.detach_text()
 
     def get_point(self, message_text="Выберете точку") -> array:
         self.expand_acad()

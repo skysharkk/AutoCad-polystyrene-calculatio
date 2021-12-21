@@ -21,7 +21,8 @@ class Ui_Form(object):
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
         self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 412, 822))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
-        self.gridLayout_2 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
+        self.gridLayout_2 = QtWidgets.QGridLayout(
+            self.scrollAreaWidgetContents)
         self.gridLayout_2.setObjectName("gridLayout_2")
         self.init_data = QtWidgets.QGroupBox(self.scrollAreaWidgetContents)
         self.init_data.setCheckable(False)
@@ -79,7 +80,8 @@ class Ui_Form(object):
         self.verticalLayout_4.setObjectName("verticalLayout_4")
         self.res_table = QtWidgets.QTableWidget(self.results)
         self.res_table.setMinimumSize(QtCore.QSize(0, 150))
-        self.res_table.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.SizeAdjustPolicy.AdjustToContents)
+        self.res_table.setSizeAdjustPolicy(
+            QtWidgets.QAbstractScrollArea.SizeAdjustPolicy.AdjustToContents)
         self.res_table.setObjectName("res_table")
         self.res_table.setColumnCount(8)
         self.res_table.setRowCount(0)
@@ -104,6 +106,9 @@ class Ui_Form(object):
         self.verticalLayout_4.addWidget(self.res_table)
         self.gridLayout = QtWidgets.QGridLayout()
         self.gridLayout.setObjectName("gridLayout")
+        self.clear_all_data = QtWidgets.QPushButton(self.results)
+        self.clear_all_data.setObjectName("clear_all_data")
+        self.verticalLayout_4.addWidget(self.clear_all_data)
         self.res_delete_position = QtWidgets.QPushButton(self.results)
         self.res_delete_position.setObjectName("res_delete_position")
         self.gridLayout.addWidget(self.res_delete_position, 0, 0, 1, 1)
@@ -114,10 +119,12 @@ class Ui_Form(object):
         self.res_draw_pos.setObjectName("res_draw_pos")
         self.gridLayout.addWidget(self.res_draw_pos, 1, 1, 1, 1)
         self.res_export_table_to_excel = QtWidgets.QPushButton(self.results)
-        self.res_export_table_to_excel.setObjectName("res_export_table_to_excel")
+        self.res_export_table_to_excel.setObjectName(
+            "res_export_table_to_excel")
         self.gridLayout.addWidget(self.res_export_table_to_excel, 1, 0, 1, 1)
         self.res_import_data_from_excel = QtWidgets.QPushButton(self.results)
-        self.res_import_data_from_excel.setObjectName("res_import_data_from_excel")
+        self.res_import_data_from_excel.setObjectName(
+            "res_import_data_from_excel")
         self.gridLayout.addWidget(self.res_import_data_from_excel, 2, 1, 1, 1)
         self.res_excel_template = QtWidgets.QPushButton(self.results)
         self.res_excel_template.setObjectName("res_excel_template")
@@ -153,12 +160,14 @@ class Ui_Form(object):
         self.label.setText(_translate("Form", "Толщина ППТ"))
         self.init_data_type.setTitle(_translate("Form", "Тип"))
         self.init_data_type_1.setText(_translate("Form", "ППТ-15-А-Р"))
-        self.init_data_type_2.setText(_translate("Form", "Эффективный утеплитель λ ≤ 0,034 Вт/(м·°C)"))
+        self.init_data_type_2.setText(_translate(
+            "Form", "Эффективный утеплитель λ ≤ 0,034 Вт/(м·°C)"))
         self.init_data_table.headerItem().setText(0, _translate("Form", "Толщина"))
         self.init_data_table.headerItem().setText(1, _translate("Form", "Тип"))
         self.init_data_add.setText(_translate("Form", "Добавить"))
         self.init_data_delete.setText(_translate("Form", "Удалить"))
-        self.acad_select_positions.setText(_translate("Form", "Выбрать позиции ППТ"))
+        self.acad_select_positions.setText(
+            _translate("Form", "Выбрать позиции ППТ"))
         self.results.setTitle(_translate("Form", "Результат"))
         item = self.res_table.horizontalHeaderItem(0)
         item.setText(_translate("Form", "Поз."))
@@ -176,12 +185,19 @@ class Ui_Form(object):
         item.setText(_translate("Form", "Объем, м3"))
         item = self.res_table.horizontalHeaderItem(7)
         item.setText(_translate("Form", "Примечания"))
+        self.clear_all_data.setText(_translate("Form", "Очистить данные"))
         self.res_delete_position.setText(_translate("Form", "Удалить позицию"))
-        self.res_export_table_to_acad.setText(_translate("Form", "Экспорт таблицы в AutoCAD"))
-        self.res_draw_pos.setText(_translate("Form", "Отрисовать пакеты в AutoCAD"))
-        self.res_export_table_to_excel.setText(_translate("Form", "Экспорт таблицы в Excel"))
-        self.res_import_data_from_excel.setText(_translate("Form", "Импорт. таблицу из Excel"))
-        self.res_excel_template.setText(_translate("Form", "Пример таблицы Excel"))
+        self.res_export_table_to_acad.setText(
+            _translate("Form", "Экспорт таблицы в AutoCAD"))
+        self.res_draw_pos.setText(_translate(
+            "Form", "Отрисовать пакеты в AutoCAD"))
+        self.res_export_table_to_excel.setText(
+            _translate("Form", "Экспорт таблицы в Excel"))
+        self.res_import_data_from_excel.setText(
+            _translate("Form", "Импорт. таблицу из Excel"))
+        self.res_excel_template.setText(
+            _translate("Form", "Пример таблицы Excel"))
         self.waste.setTitle(_translate("Form", "Отходы"))
-        self.calc_waste.setText(_translate("Form", "Рассчиать и вывести на лист"))
+        self.calc_waste.setText(_translate(
+            "Form", "Рассчитать и вывести на лист"))
         self.draw_bin.setText(_translate("Form", "Отрисовать раскрой"))

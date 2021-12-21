@@ -9,5 +9,5 @@ if TYPE_CHECKING:
 
 class Observer(ABC):
     @abstractmethod
-    def update(self, subject: Subject) -> None:
+    def update(self, subject: Subject, event: str) -> None:
         pass
