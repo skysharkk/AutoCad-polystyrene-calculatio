@@ -164,7 +164,7 @@ class TableData(Observer):
             overall_volume[item.poly_type.decode()] = round_half_up(
                 overall_volume[item.poly_type.decode()] +
                 (float(item.volume) * (float(item.amount))),
-                2,
+                5,
                 False
             )
         return overall_volume

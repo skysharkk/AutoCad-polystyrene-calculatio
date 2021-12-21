@@ -88,7 +88,7 @@ class Acad(Subject, Observer):
                     initial_point = self.get_point()
                     self.acad_table = Table(
                         self.acad, scale.get_value(), initial_point)
-                    self.acad_table.draw_table(ui_data.get_data())
+                    self.acad_table.draw_table(ui_data)
                 except _ctypes.COMError:
                     print("point not selected")
             else:

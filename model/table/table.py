@@ -2,7 +2,7 @@ from comtypes.client import Constants
 from pyautocad import Autocad
 from typing import List, Union
 from model.table.poly_table_data import RowData, PolyTableData
-from view.table_data import DataItem
+from view.table_data import DataItem, TableData
 
 
 class Table:
@@ -30,8 +30,10 @@ class Table:
                 for index, col_size in enumerate(row_el.column_width):
                     self._table.SetColumnWidth(index, col_size)
             for cell_index, cell_el in enumerate(row_el.row_data):
-                self._table.SetTextHeight2(row_index, cell_index, 1, cell_el.text_height)
-                self._table.SetCellAlignment(row_index, cell_index, self._get_constant(cell_el.aline))
+                self._table.SetTextHeight2(
+                    row_index, cell_index, 1, cell_el.text_height)
+                self._table.SetCellAlignment(
+                    row_index, cell_index, self._get_constant(cell_el.aline))
                 self._table.SetGridLineWeight2(
                     row_index,
                     cell_index,
@@ -40,7 +42,7 @@ class Table:
                 )
                 self._table.SetText(row_index, cell_index, cell_el.data)
 
-    def draw_table(self, data: List[DataItem]) -> None:
+    def draw_table(self, data: TableData) -> None:
         converted_data = PolyTableData(self.scale, data).create_table_data()
         if self._table:
             self._table.Delete()
