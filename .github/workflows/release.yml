@@ -24,22 +24,22 @@ jobs:
       - name: Export requirements
         run: poetry export -f requirements.txt --output requirements.txt
       - name: Download python 3.8.10
-        run:  wget https://www.python.org/ftp/python/3.8.10/python-3.8.10-embed-amd64.zip
+        run:  wget https://www.python.org/ftp/python/3.8.0/python-3.8.0-embed-amd64.zip
       - name: Unzip python
         run: |
-          unzip python-3.8.10-embed-amd64.zip -d python-3.8.10
-          rm -rf python-3.8.10-embed-amd64.zip
+          unzip python-3.8.0-embed-amd64.zip -d python-3.8.0
+          rm -rf python-3.8.0-embed-amd64.zip
       - name: Download pip
-        run: wget https://bootstrap.pypa.io/get-pip.py -P python-3.8.10
+        run: wget https://bootstrap.pypa.io/get-pip.py -P python-3.8.0
       - name: Configurate pip
-        run: echo import site >> python-3.8.10/python38._pth
+        run: echo import site >> python-3.8.0/python38._pth
       - name: Create install batch file
         run: |
-          printf "%s\n" "@echo off" "python-3.8.10\python.exe python-3.8.10\get-pip.py" "python-3.8.10\Scripts\pip.exe install -r requirements.txt" "pause" > install.bat
+          printf "%s\n" "@echo off" "python-3.8.0\python.exe python-3.8.0\get-pip.py" "python-3.8.0\Scripts\pip.exe install setuptools==57.0.0" "python-3.8.0\Scripts\pip.exe install wheel==0.36.2" "python-3.8.0\Scripts\pip.exe install --no-cache-dir -r requirements.txt" "pause" > install.bat
       - name: Create run batch file
         run: |
           mkdir bin
-          printf "%s\n" "@echo off" "python-3.8.10\python.exe controller.py" > bin/run.bat
+          printf "%s\n" "@echo off" "python-3.8.0\python.exe controller.py" > bin/run.bat
       - name: Create run vbs script
         run: |
           printf '%s\n' 'Set objShell = WScript.CreateObject("WScript.Shell")' 'objShell.Run("bin\run.bat"), 0, True' > run.vbs
