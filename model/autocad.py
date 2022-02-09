@@ -164,8 +164,12 @@ class Acad(Subject, Observer):
             waste_result = self._waste.calc_waste(calc_overall_volume)
             initial_point = self.get_point()
             waste_str = ""
+            text_index = 0
             for index, poly_type in enumerate(waste_result.keys()):
-                waste_str += f"{index + 1}.Возвратные остатки - {waste_result[poly_type]['returnable']} м\u00b3, невозвратные(неиспользуемые в производстве) - {waste_result[poly_type]['non_returnable']} м\u00b3 ({waste_result[poly_type]['non_returnable_percent']}%) - для {poly_type}.\n"
+                text_index += 1
+                waste_str += f"{text_index}.Возвратные остатки - {waste_result[poly_type]['returnable']} м\u00b3, невозвратные(неиспользуемые в производстве) - {waste_result[poly_type]['non_returnable']} м\u00b3 ({waste_result[poly_type]['non_returnable_percent']}%) - для {poly_type}.\n"
+            waste_str += f"{text_index + 1}.Перед бетонированием внутреннего слоя, стыки сплошного утеплителя заполнить монтажной пеной.\n"
+            waste_str += f"{text_index + 2}.Схему установки деревянных пробок см."
             waste_text = TextItem(
                 self.acad,
                 waste_str,

@@ -6,7 +6,7 @@ from projectutils import round_half_up
 from dataclasses import dataclass
 from projectutils import get_corner_coordinates
 from projectutils import Points
-from projectutils.auxiliary_utulities import show_error_window
+from projectutils.auxiliary_utulities import show_error_window, round_sizes
 from enum import Enum
 
 if TYPE_CHECKING:
@@ -73,8 +73,8 @@ class TableData(Observer):
     @staticmethod
     def _calc_sizes(scale: float, coordinates: Points) -> Sizes:
         return Sizes(
-            int(abs(coordinates.max_x - coordinates.min_x) * scale),
-            int(abs(coordinates.max_y - coordinates.min_y) * scale)
+            round_sizes(int(abs(coordinates.max_x - coordinates.min_x) * scale)),
+            round_sizes(int(abs(coordinates.max_y - coordinates.min_y) * scale))
         )
 
     @staticmethod

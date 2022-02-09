@@ -2,6 +2,7 @@ import math
 import ctypes
 from array import array
 from typing import Union, NamedTuple, List, Tuple, Any, TypeVar, Iterable
+from decimal import Decimal
 
 
 def round_half_up(number: float, decimals: int = 0, int_result: bool = True) -> Union[int, float]:
@@ -75,3 +76,17 @@ def two_dimension_list_to_list(converted_list: List[List[T]]) -> List[T]:
     for item in converted_list:
         formatted_list.extend(item)
     return formatted_list
+
+
+def round_sizes(size: int) -> int:
+    divided_number = Decimal(str(size / 10))
+    number_parts = str(Decimal(str(size / 10))).split(".")
+    start_of_number = number_parts[0]
+    end_of_number = number_parts[1]
+    if int(end_of_number) == 0 or int(end_of_number) == 5:
+        return size
+    if int(end_of_number) <= 2:
+        return int(f"{start_of_number}0")
+    if int(end_of_number) > 7:
+        return int(f"{str(round_half_up(float(divided_number)))}0")
+    return int(f"{start_of_number}5")
