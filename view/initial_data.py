@@ -1,4 +1,5 @@
 from __future__ import annotations
+from ast import In
 from collections import namedtuple
 from typing import List, TYPE_CHECKING
 from view.components import Input, GroupBox, Button, TreeWidget
@@ -8,7 +9,7 @@ from observer import Observer, Subject
 if TYPE_CHECKING:
     from model import Acad
 
-Data = namedtuple("Data", ["scale", "poly_type", "depth", "coordinates"])
+Data = namedtuple("Data", ["scale", "poly_type", "depth", "coordinates", "width", "height"])
 
 
 class InitialData(Observer, Subject):
@@ -25,6 +26,8 @@ class InitialData(Observer, Subject):
         self.form = form
         self.scale = Input(self.form.init_data_scale)
         self.depth = Input(self.form.init_data_depth)
+        self.height = Input(self.form.init_data_height)
+        self.width = Input(self.form.init_data_width)
         self.poly_type_group = GroupBox(self.form.init_data_type)
         self.add_type_btn = Button(self.form.init_data_add, is_enabled=False)
         self.delete_type_btn = Button(
@@ -35,7 +38,11 @@ class InitialData(Observer, Subject):
 
         self.scale.set_validator("^[0-9]*[.]?[0-9]+$")
         self.depth.set_validator("^[0-9]*[.]?[0-9]+$")
+        self.width.set_validator("^[0-9]*[.]?[0-9]+$")
+        self.height.set_validator("^[0-9]*[.]?[0-9]+$")
         self.scale.connect_text_changed_event(self.change_choose_pos_btn_state)
+        self.height.connect_text_changed_event(self.change_choose_pos_btn_state)
+        self.width.connect_text_changed_event(self.change_choose_pos_btn_state)
         self.depth.connect_text_changed_event(self.change_add_type_btn_state)
         self.add_type_btn.connect_action(self.add_char)
         self.types_table.connect_clicked_event(self.types_table_event)
@@ -65,7 +72,7 @@ class InitialData(Observer, Subject):
             self.add_type_btn.enable_btn()
 
     def change_choose_pos_btn_state(self) -> None:
-        if self.scale.is_empty() or self.types_table.is_empty():
+        if self.scale.is_empty() or self.types_table.is_empty() or self.width.is_empty() or self.height.is_empty():
             self.choose_pos_btn.disable_btn()
         else:
             self.choose_pos_btn.enable_btn()
@@ -82,7 +89,9 @@ class InitialData(Observer, Subject):
                 self.scale.get_value(),
                 self.types_table.get_selected_item()[1][1].decode(),
                 self.types_table.get_selected_item()[1][0],
-                subject.selected_items
+                subject.selected_items,
+                self.width.get_value(),
+                self.height.get_value()
             )
             self.notify("update")
 

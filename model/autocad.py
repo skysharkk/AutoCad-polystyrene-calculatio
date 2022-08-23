@@ -73,7 +73,7 @@ class Acad(Subject, Observer):
                 self.acad_text.clear()
             self.inscribe_text(subject.table_data.get_data(), subject.scale)
             self._waste = Waste(format_data_for_waste(
-                subject.table_data.get_data()))
+                subject.table_data.get_data()), subject.width, subject.height)
         if event == "clear":
             self.acad_text.detach_text()
 
@@ -125,8 +125,8 @@ class Acad(Subject, Observer):
                 for bins in waste_data[poly_type][depth]:
                     self.polyline.draw_rectangle(
                         initial_point,
-                        self._waste.original_width,
-                        self._waste.original_height
+                        self._waste.original_height,
+                        self._waste.original_width
                     )
                     for item in bins.items:
                         self.polyline.draw_rectangle(
@@ -147,7 +147,7 @@ class Acad(Subject, Observer):
                             free_rect.height,
                             1
                         )
-                    initial_point[1] += self._waste.original_height
+                    initial_point[1] += self._waste.original_width
                     initial_point[1] += 100
                 obj_description = TextItem(
                     self.acad,
@@ -169,11 +169,11 @@ class Acad(Subject, Observer):
                 text_index += 1
                 waste_str += f"{text_index}.Возвратные остатки - {waste_result[poly_type]['returnable']} м\u00b3, невозвратные(неиспользуемые в производстве) - {waste_result[poly_type]['non_returnable']} м\u00b3 ({waste_result[poly_type]['non_returnable_percent']}%) - для {poly_type}.\n"
             waste_str += f"{text_index + 1}.Перед бетонированием внутреннего слоя, стыки сплошного утеплителя заполнить монтажной пеной.\n"
-            waste_str += f"{text_index + 2}.Схему установки деревянных пробок см."
+            waste_str += f"{text_index + 2}.Схему установки деревянных пробок см. 152М-КЖ2.И л.9а-9в."
             waste_text = TextItem(
                 self.acad,
                 waste_str,
-                100 / scale_value,
+                150 / scale_value,
                 7400 / scale_value
             )
             waste_text.draw_text(initial_point)

@@ -5,10 +5,10 @@ from projectutils import round_half_up
 
 
 class Waste:
-    def __init__(self, data: dict) -> None:
+    def __init__(self, data: dict, original_width: float, original_height: float) -> None:
         self.data = data
-        self.original_width = 2000
-        self.original_height = 1000
+        self.original_height = original_height
+        self.original_width = original_width
         self.result = {}
         self._pack_objets()
 
@@ -34,8 +34,8 @@ class Waste:
 
     def _create_bins(self, sizes: List[Sizes]) -> list:
         manager = BinManager(
-            self.original_width,
             self.original_height,
+            self.original_width,
             pack_algo="guillotine",
             heuristic="best_shortside",
             rectangle_merge=True,
@@ -73,7 +73,7 @@ class Waste:
             for volume_type in waste_dict[poly_type].keys():
                 waste_dict[poly_type][volume_type] = round_half_up(
                     waste_dict[poly_type][volume_type],
-                    2,
+                    3,
                     False
                 )
         return waste_dict

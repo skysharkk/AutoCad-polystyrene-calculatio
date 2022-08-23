@@ -31,6 +31,8 @@ class Results(Observer, Subject):
         self.export_to_excel_btn = Button(self._form.res_export_table_to_excel)
         self.export_to_excel_btn.connect_action(self.export_to_excel_action)
         self.scale = None
+        self.height = None
+        self.width = None
         self.draw_objects_btn = Button(self._form.res_draw_pos)
         self.clear_all_data = Button(self._form.clear_all_data)
         self.clear_all_data.connect_action(self.clear_data)
@@ -96,6 +98,8 @@ class Results(Observer, Subject):
     def update(self, subject: InitialData, event: str) -> None:
         if event == "update":
             self.scale = subject.scale.get_value()
+            self.height = subject.height.get_value()
+            self.width = subject.width.get_value()
             self.table_data.update_data(subject.data)
             self.acad_table.import_data(self.table_data)
             self.notify("update")
